@@ -1,0 +1,134 @@
+/* css for admin */
+* {
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+table{
+
+}
+
+th, td{
+    border: 1px solid #000;
+    padding: 5px 15px;
+    vertical-align: middle;
+}
+
+.main{
+    width: 1600px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* ==========================================================================
+   catalog
+   ========================================================================== */
+
+.category, .brand, .shipment{
+  padding: 15px 5px;
+  margin: 20px auto;
+  border: 1px solid #000;
+}
+
+.catalog td:first-child{
+  text-align: center;
+}
+
+/* ==========================================================================
+   brands
+   ========================================================================== */
+.brands textarea{
+    font-size: 13px;
+}
+
+.row{
+  margin: 5px;
+}
+
+.row label{
+  float: left;
+  width: 150px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.row textarea{
+  border: 1px solid #000;
+}
+
+/* ==========================================================================
+   shipment
+   ========================================================================== */
+.shipment textarea{
+    font-size: 13px;
+}
+/* ==========================================================================
+   btn
+   ========================================================================== */
+.btn {
+  -webkit-transition: background-color 0.3s ease;
+  -moz-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
+  position: relative;
+  display: block;
+  padding: 7px 16px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 20px;
+  background: #373a4b;
+  color: #fff;
+  vertical-align: middle;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+  font-family: "glober_regularregular", sans-serif;
+  border-radius: 4px;
+  border: none;
+  text-decoration: none; }
+  .btn::-moz-focus-inner {
+    padding: 0;
+    border: 0; }
+  .btn:focus {
+    outline: 0; }
+  .btn:focus, .btn:hover {
+    text-decoration: none !important;
+    background-color: #4e5860; }
+  .btn:active {
+    background-color: #4e5860;
+    color: #fff !important; }
+  .btn:visited {
+    color: #fff !important; }
+  .btn[disabled] {
+    opacity: .4;
+    border-color: transparent !important;
+    background-image: none;
+    cursor: not-allowed;
+    box-shadow: none; }
+
+.row{
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.span-4{
+    display: inline-block;
+}
+
+input[type="text"]{
+    border: 1px solid #000;
+}
+
+.fl-left{
+  float: left;
+}
+
+.output{
+  line-height: 34px;
+  margin: 0 15px;
+  float: left;
+  color: red;
+  font-weight: bold;
+  font-size: 18px;
+}
