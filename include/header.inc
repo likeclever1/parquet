@@ -1,7 +1,7 @@
 <header class="header" role="banner">
     <div class="container">
         <div class="logo">
-            <a href="index.php">
+            <a href="/">
                 <img src="/images/design/logo.png" alt="Паркетный салон Antique">
             </a>
         </div>

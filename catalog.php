@@ -1,11 +1,11 @@
 <?php
-    require_once("functions/connect_to_bd.php");
+    require_once("functions/connect_bd.php");
 
     require_once("include/site-header.php");
 
-    require_once("include/header.php");
+    require_once("include/header.inc");
 
-    require_once("include/main-menu.php");
+    require_once("include/main-menu.inc");
 ?>
     
     <div class="main">
@@ -15,43 +15,46 @@
             ?>
 
             <article class="content" role="main">
-                <ul class="catalog">
-                
+                <div class="hero">
+                    <ul class="hero__list">
+                    
 
-                <?php
-                    $img_path = 'images/content/catalog/';
+                    <?php
+                        $img_path = 'upload/images/category/';
 
-                    $query = "select * from catalog order by id";
+                        require_once("functions/fetch_data/category.php");
 
-                    $items = mysqli_query($connect, $query);
+                        while($row = mysqli_fetch_assoc($categoryData)) {
+                            
+                            $linkPathCategory = "catalog/". $row['url'];
 
-                    if(!$items) {
-                        die("Неудалось выполнить запрос".mysql_error());
-                    }
+                            echo "<li class=\"hero__item\">";
+                            echo "<a href='".$linkPathCategory."' class='hero__link'>";
+                            echo "<img src='".$img_path.$row['image']."' alt='".$row['title']."'>";
+                            echo "<span>".$row['title']."</span>";
+                            echo "</a>";
 
-                    while($row = mysqli_fetch_assoc($items)) {
-                        echo "<li class=\"hero__item\">";
-                        echo "<a href='brand.php?type=". $row['id_type'] ."' class='hero__link'>";
-                        echo "<img src='".$img_path.$row['id_type'].".png' alt='".$row['type']."'>";
-                        echo "<span>".$row['type']."</span>";
-                        echo "</a>";
+                            $queryBrand = "select distinct url, title from brand where `id_category` = '". $row['id'] ."'";
+                            $brandData = mysqli_query($connect, $queryBrand);
+                            if(!$brandData) {die("Не удалось выполнить запрос, чтобы получить список брендов!");}
 
-                        $queryBrand = "select distinct id_brand, brand from brand where id_type = '". $row['id_type'] ."'";
-                        $listBrand = mysqli_query($connect, $queryBrand);
-                        if(!$listBrand) {die("Не удалось выполнить запрос, чтобы получить список брендов!");}
+                            echo "<ul>";
 
-                        echo "<ul>";
-                        while($itemBrand = mysqli_fetch_assoc($listBrand)) {
-                            echo "<li>";
-                            echo "<a href='collection.php?type=". $row['id_type'] ."&brand=".$itemBrand['id_brand']."'>".$itemBrand['brand']."</a>";
+                            while($itemBrand = mysqli_fetch_assoc($brandData)) {
+
+                                $linkPathBrand = "catalog/". $row['url'] ."/".$itemBrand['url'];
+
+                                echo "<li>";
+                                echo "<a href='".$linkPathBrand."'>".$itemBrand['title']."</a>";
+                                echo "</li>";
+                            }
+                            echo "</ul>";
+
                             echo "</li>";
                         }
-                        echo "</ul>";
-
-                        echo "</li>";
-                    }
-                ?>
-                </ul><!-- end .catalog -->
+                    ?>
+                    </ul><!-- end .catalog -->
+                </div><!-- end .hero -->
             </article>
 
             <?php
@@ -61,6 +64,6 @@
     </div><!-- end .main -->
     
     <?php
-        require_once("include/footer.php");
+        require_once("include/footer.inc");
         require_once("include/site-footer.php");
     ?>

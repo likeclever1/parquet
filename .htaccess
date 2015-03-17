@@ -1,0 +1,8 @@
+AddDefaultCharset utf-8
+
+RewriteEngine on
+
+RewriteBase /
+
+RewriteRule catalog/([^/]+)/([^/]+) catalog.php?category=$1&brand=$2 [L]
+RewriteRule catalog/([^/]+) catalog.php?category=$1 [L]

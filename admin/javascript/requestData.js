@@ -4,6 +4,7 @@ $("#categoryForm").on("click", function(e) {
     var $target = $(e.target),
         type = null,
         dataRequest = {},
+        formData,
         textOutput = $("#categoryOutput");
 
     if($target.hasClass("btn-remove")) {
@@ -21,8 +22,8 @@ $("#categoryForm").on("click", function(e) {
             "image": $("#categoryImage").val().split("\\").pop()
         };
 
-        var formData = new FormData();
-        formData.append('file', $("#inputCategory").find("input:file").get(0).files[0]);
+        formData = new FormData();
+        formData.append('file', $("#categoryImage").get(0).files[0]);
 
         $.ajax({
             processData: false,
@@ -72,7 +73,7 @@ $("#categoryForm").on("click", function(e) {
                 textOutput.get(0).innerHTML = "Данные изменены";
             break;
             case "add":
-                if(data && typeof data == 'object') {
+                if(data['data']) {
 
                     $(this).parents("#inputCategory").find("input").val("");
 
@@ -96,226 +97,330 @@ $("#categoryForm").on("click", function(e) {
 
 // **************************** end Category ***************************************//
 
+
+// **************************** start Brand ***************************************//
+
 $("#brandForm").on("click", function(e) {
-    e.preventDefault();
 
     var $target = $(e.target),
-        textOutput = $("#brandDescEvent");
+        type = null,
+        dataRequest = {},
+        formData,
+        textOutput = $("#brandOutput");
 
     if($target.hasClass("btn-remove")) {
-        $.ajax({
-            url: "ajax/removeDataBrand.php",
-            type: "POST",
-            context: e.target,
-            data: {
-                "id": e.target.value
-            },
-            success: removeDataBrands
-        });
-    } else if($target.hasClass("btn-update")) {
-
-        $.ajax({
-            url: "ajax/updateDataBrand.php",
-            type: "POST",
-            data: {
-                "id": e.target.value,
-                "id_type": $(e.target).parents('tr').find(".id_type textarea").val(),
-                "id_brand": $(e.target).parents('tr').find(".id_brand textarea").val(),
-                "brand": $(e.target).parents('tr').find(".brand textarea").val(),
-                "id_collection": $(e.target).parents('tr').find(".id_collection textarea").val(),
-                "collection": $(e.target).parents('tr').find(".collection textarea").val(),
-                "country": $(e.target).parents('tr').find(".country textarea").val(),
-                "describe": $(e.target).parents('tr').find(".describe textarea").val()
-            },
-            success: updateDataBrand
-        })
+        type = 'remove';
     } else if($target.hasClass("btn-add")) {
+        type = 'add';
+    } else if($target.hasClass("btn-update")) {
+        type = 'update';
+    } else {
+        return;
+    }
+    
+    if(type == "add") {
+
+        formData = new FormData();
+        formData.append('file', $("#brandImage").get(0).files[0]);
 
         $.ajax({
-            url: "ajax/addDataBrand.php",
+            processData: false,
+            cache: false,
+            contentType: false,
+            url: "ajax/uploadImageBrand.php",
             type: "POST",
             context: e.target,
-            data: {
-                "id_type": $(e.target).parents('#inputBrandData').find(".id_type input").val(),
-                "id_brand": $(e.target).parents('#inputBrandData').find(".id_brand input").val(),
-                "brand": $(e.target).parents('#inputBrandData').find(".brand input").val(),
-                "id_collection": $(e.target).parents('#inputBrandData').find(".id_collection input").val(),
-                "collection": $(e.target).parents('#inputBrandData').find(".collection input").val(),
-                "country": $(e.target).parents('#inputBrandData').find(".country input").val(),
-                "describe": $(e.target).parents('#inputBrandData').find(".describe textarea").val()
-            },
-            success: addDataBrand
-        })
+            data: formData
+        });
+
     }
 
-    function removeDataBrands(data) {
-        if(data) {
-            $(this).parents("tr").remove();
-            textOutput.get(0).innerHTML = "Тип товара <b>" + data['brand'] + "</b> был удалён";
-        }
+    dataRequest = {
+        "type": type,
+        "title": $('#inputBrand').find(".title input").val() || $target.parents("tr").find(".title textarea").val(),
+        "url": $('#inputBrand').find(".url input").val() || $target.parents("tr").find(".url textarea").val(),
+        "image": $("#brandImage").val().split("\\").pop() || $target.parents("tr").find(".image textarea").val(),
+        "id_category": $('#inputBrand').find(".id_category input").val() || $target.parents("tr").find(".id_category textarea").val(),
+        "country": $('#inputBrand').find(".country input").val() || $target.parents("tr").find(".country textarea").val(),
+        "text": $('#inputBrand').find(".text textarea").val() || $target.parents("tr").find(".text textarea").val()
     };
 
-    function updateDataBrand(data) {
-        if(data) {
-            $("#brandDescEvent").text("Данные изменены");
-        } else {
-            $("#brandDescEvent").text("Данные не были изменены");
-        }
-    };
+    if(type != "add") {
+        dataRequest['id'] = e.target.getAttribute('data-id');
+    }
+    
 
-    function addDataBrand(data) {
-        var row = $(this).parents("#inputBrandData");
+    $.ajax({
+        url: "ajax/brandData.php",
+        type: "POST",
+        context: e.target,
+        data: dataRequest,
+        success: success,
+        error: error
+    });
 
-        if(data && typeof data == 'object') {
-            row.find("input[type='text']").val("");
-            row.find("textarea").val("");
-            textOutput.get(0).innerHTML = "Бренд <b>" + data['brand'] + "</b> был добавлен в таблицу";
+    function success(data) {
 
-            $("<tr>\n" + 
-                "<td>" + data['id'] + "</td>\n" + 
-                "<td class='id_type'><textarea cols=\"10\" rows=\"1\">" + data['id_type'] + "</textarea></td>\n" + 
-                "<td class='id_brand'><textarea cols=\"12\" rows=\"1\">" + data['id_brand'] + "</textarea></td>\n" + 
-                "<td class='brand'><textarea cols=\"12\" rows=\"1\">" + data['brand'] + "</textarea></td>\n" + 
-                "<td class='id_collection'><textarea cols=\"12\" rows=\"1\">" + data['id_collection'] + "</textarea></td>\n" + 
-                "<td class='collection'><textarea cols=\"12\" rows=\"1\">" + data['collection'] + "</textarea></td>\n" + 
-                "<td class='country'><textarea cols=\"12\" rows=\"1\">" + data['country'] + "</textarea></td>\n" + 
-                "<td class='describe'><textarea cols=\"17\" rows=\"1\">" + data['describe'] + "</textarea></td>\n" + 
-                "<td><button class=\"btn btn-update\" type='submit' value='" + data['id'] + "'>Update</button></td>\n" + 
-                "<td><button class=\"btn btn-remove\" type='submit' value='" + data['id'] + "'>Remove</button></td>\n" + 
-            "</tr>").appendTo(".brand-table")
-        } else {
-            textOutput.text(data);
+        switch(data['type']) {
+            case "remove":
+                $(this).parents("tr").remove();
+                textOutput.get(0).innerHTML = "Бренд <b>" + data['title'] + "</b> был удалён";
+            break;
+            case "update":
+                textOutput.get(0).innerHTML = "Данные изменены";
+            break;
+            case "add":
+                if(data && typeof data == 'object') {
+
+                    $("#inputBrand").find("input").val("");
+                    $("#inputBrand").find("textarea").val("");
+
+                    $("<tr>\n" + 
+                        "<td class='id'>" + data['id'] + "</td>\n" + 
+                        "<td class='title'><textarea cols=\"10\" rows=\"1\">" + data['title'] + "</textarea></td>\n" + 
+                        "<td class='url'><textarea cols=\"12\" rows=\"1\">" + data['url'] + "</textarea></td>\n" + 
+                        "<td class='image'><textarea cols=\"12\" rows=\"1\">" + data['image'] + "</textarea></td>\n" + 
+                        "<td class='id_category'><textarea cols=\"12\" rows=\"1\">" + data['id_category'] + "</textarea></td>\n" + 
+                        "<td class='country'><textarea cols=\"12\" rows=\"1\">" + data['country'] + "</textarea></td>\n" + 
+                        "<td class='text'><textarea cols=\"17\" rows=\"1\">" + data['text'] + "</textarea></td>\n" + 
+                        "<td><button class=\"btn btn-update\" type='submit' name='update_type' data-id='" + data['id'] + "'>Update</button></td>\n" + 
+                        "<td><button class=\"btn btn-remove\" type='submit' name='remove_type' data-id='" + data['id'] + "'>Remove</button></td>\n" + 
+                    "</tr>").appendTo(".table-brand");
+
+                    textOutput.get(0).innerHTML = "Бренд " + data['title'] + " добавлен";
+                } else {
+                    textOutput.get(0).innerHTML = "Такой бренд уже существует";
+                }
+            break;
         }
     }
 
+    function error() {
+        textOutput.get(0).innerHTML = "Запрос не удалось выполнить!";
+    }
 });
+
+// **************************** end Brand ***************************************//
+
+
+// **************************** start Collection ***************************************//
+
+$("#collectionForm").on("click", function(e) {
+
+    var $target = $(e.target),
+        type = null,
+        dataRequest = {},
+        formData,
+        textOutput = $("#collectionOutput");
+
+    if($target.hasClass("btn-remove")) {
+        type = 'remove';
+    } else if($target.hasClass("btn-add")) {
+        type = 'add';
+    } else if($target.hasClass("btn-update")) {
+        type = 'update';
+    } else {
+        return;
+    }
+    
+    if(type == "add") {
+
+        formData = new FormData();
+        formData.append('file', $("#collectionImage").get(0).files[0]);
+
+        $.ajax({
+            processData: false,
+            cache: false,
+            contentType: false,
+            url: "ajax/uploadImageCollection.php",
+            type: "POST",
+            context: e.target,
+            data: formData
+        });
+
+    }
+
+    dataRequest = {
+        "type": type,
+        "title": $('#inputCollection').find(".title input").val() || $target.parents("tr").find(".title textarea").val(),
+        "url": $('#inputCollection').find(".url input").val() || $target.parents("tr").find(".url textarea").val(),
+        "image": $("#collectionImage").val().split("\\").pop() || $target.parents("tr").find(".image textarea").val(),
+        "id_brand": $('#inputCollection').find(".id_brand input").val() || $target.parents("tr").find(".id_brand textarea").val(),
+        "feature": $('#inputCollection').find(".feature textarea").val() || $target.parents("tr").find(".feature textarea").val()
+    };
+
+    if(type != "add") {
+        dataRequest['id'] = e.target.getAttribute('data-id');
+    }
+    
+
+    $.ajax({
+        url: "ajax/collectionData.php",
+        type: "POST",
+        context: e.target,
+        data: dataRequest,
+        success: success,
+        error: error
+    });
+
+    function success(data) {
+
+        switch(data['type']) {
+            case "remove":
+                $(this).parents("tr").remove();
+                textOutput.get(0).innerHTML = "Коллекция <b>" + data['title'] + "</b> была удалёна";
+            break;
+            case "update":
+                textOutput.get(0).innerHTML = "Данные изменены";
+            break;
+            case "add":
+                if(data && typeof data == 'object') {
+
+                    $("#inputBrand").find("input").val("");
+                    $("#inputBrand").find("textarea").val("");
+
+                    $("<tr>\n" + 
+                        "<td class='id'>" + data['id'] + "</td>\n" + 
+                        "<td class='title'><textarea cols=\"10\" rows=\"1\">" + data['title'] + "</textarea></td>\n" + 
+                        "<td class='url'><textarea cols=\"12\" rows=\"1\">" + data['url'] + "</textarea></td>\n" + 
+                        "<td class='image'><textarea cols=\"12\" rows=\"1\">" + data['image'] + "</textarea></td>\n" + 
+                        "<td class='id_brand'><textarea cols=\"12\" rows=\"1\">" + data['id_brand'] + "</textarea></td>\n" + 
+                        "<td class='feature'><textarea cols=\"17\" rows=\"1\">" + data['feature'] + "</textarea></td>\n" + 
+                        "<td><button class=\"btn btn-update\" name='update_type' data-id='" + data['id'] + "'>Update</button></td>\n" + 
+                        "<td><button class=\"btn btn-remove\" name='remove_type' data-id='" + data['id'] + "'>Remove</button></td>\n" + 
+                    "</tr>").appendTo(".table-collection");
+
+                    textOutput.get(0).innerHTML = "Коллекция " + data['title'] + " добавлен";
+                } else {
+                    textOutput.get(0).innerHTML = "Такая коллекция уже существует";
+                }
+            break;
+        }
+    }
+
+    function error() {
+        textOutput.get(0).innerHTML = "Запрос не удалось выполнить!";
+    }
+});
+
+// **************************** end Collection ***************************************//
+
+// **************************** start shipment ***************************************//
 
 $("#shipmentForm").on("click", function(e) {
 
     var $target = $(e.target),
-        textOutput = $("#shipmentDescEvent");
+        type = null,
+        dataRequest = {},
+        formData,
+        textOutput = $("#shipmentOutput");
 
     if($target.hasClass("btn-remove")) {
-        $.ajax({
-            url: "ajax/removeDataShipment.php",
-            type: "POST",
-            context: e.target,
-            data: {
-                "id": e.target.getAttribute("value")
-            },
-            success: removeDataShipment
-        });
-    } else if($target.hasClass("btn-update")) {
-
-        $.ajax({
-            url: "ajax/updateDataShipment.php",
-            type: "POST",
-            data: {
-                "id": e.target.getAttribute("value"),
-                "title": $(e.target).parents('tr').find(".title textarea").val(),
-                "image": $(e.target).parents('tr').find(".image textarea").val(),
-                "id_brand": $(e.target).parents('tr').find(".id_brand textarea").val(),
-                "id_collection": $(e.target).parents('tr').find(".id_collection textarea").val(),
-                "id_shipment": $(e.target).parents('tr').find(".id_shipment textarea").val(),
-                "wood": $(e.target).parents('tr').find(".wood textarea").val(),
-                "describe": $(e.target).parents('tr').find(".describe textarea").val(),
-                "news": ($(e.target).parents('tr').find(".news input").prop("checked") == true) ? 1 : 0,
-                "discount": ($(e.target).parents('tr').find(".discount input").prop("checked")) ? 1 : 0
-            },
-            success: updateDataShipment
-        })
+        type = 'remove';
     } else if($target.hasClass("btn-add")) {
-        
-        var formData = new FormData();
-        formData.append('file', $("#inputShipmentData").find("input:file").get(0).files[0]);
+        type = 'add';
+    } else if($target.hasClass("btn-update")) {
+        type = 'update';
+    } else {
+        return;
+    }
+    
+    if(type == "add") {
+
+        formData = new FormData();
+        formData.append('file', $("#shipmentImage").get(0).files[0]);
 
         $.ajax({
             processData: false,
             cache: false,
             contentType: false,
-            url: "ajax/addDataShipment.php",
+            url: "ajax/uploadImageShipment.php",
             type: "POST",
             context: e.target,
-            data: {
-                "title": $(e.target).parents('#inputShipmentData').find(".title input").val(),
-                "image": $("#shipmentImage").val().split("\\").pop(),
-                "id_brand": $(e.target).parents('#inputShipmentData').find(".id_brand input").val(),
-                "id_collection": $(e.target).parents('#inputShipmentData').find(".id_collection input").val(),
-                "id_shipment": $(e.target).parents('#inputShipmentData').find(".id_shipment input").val(),
-                "wood": $(e.target).parents('#inputShipmentData').find(".wood input").val(),
-                "describe": $(e.target).parents('#inputShipmentData').find(".describe textarea").val(),
-                "news": ($(e.target).parents('#inputShipmentData').find(".news input").prop("checked")) ? 1 : 0,
-                "discount": ($(e.target).parents('#inputShipmentData').find(".discount input").prop("checked")) ? 1 : 0
-            },
-            success: addDataShipment
-        });
-
-        $.ajax({
-            processData: false,
-            cache: false,
-            contentType: false,
-            url: "ajax/uploadImage.php",
-            type: "POST",
-            context: e.target,
-            data: formData,
-            success: imgUpload
+            data: formData
         });
 
     }
 
-    function removeDataShipment(data) {
-        if(data) {
-            $(this).parents("tr").remove();
-            textOutput.get(0).innerHTML = "Тип товара <b>" + data['title'] + "</b> был удалён";
-        }
+    dataRequest = {
+        "type": type,
+        "title": $('#inputShipment').find(".title input").val() || $target.parents("tr").find(".title textarea").val(),
+        "url": $('#inputShipment').find(".url input").val() || $target.parents("tr").find(".url textarea").val(),
+        "image": $("#shipmentImage").val().split("\\").pop() || $target.parents("tr").find(".image textarea").val(),
+        "id_collection": $('#inputShipment').find(".id_collection input").val() || $target.parents("tr").find(".id_collection textarea").val(),
+        "text": $('#inputShipment').find(".text textarea").val() || $target.parents("tr").find(".text textarea").val(),
+        "news": ($('#inputShipment').find(".news input").prop("checked")) ? 1 : 0,
+        "discount": ($('#inputShipment').find(".discount input").prop("checked")) ? 1 : 0
     };
 
-    function updateDataShipment(data) {
-        if(data) {
-            $("#shipmentDescEvent").text("Данные изменены");
-        } else {
-            $("#shipmentDescEvent").text("Данные не были изменены");
+    if(type != "add") {
+        dataRequest['id'] = e.target.getAttribute('data-id');
+        dataRequest['news'] = ($target.parents("tr").find(".news input").prop("checked")) ? 1 : 0;
+        dataRequest['discount'] = ($target.parents("tr").find(".discount input").prop("checked")) ? 1 : 0;
+    }
+    
+
+    $.ajax({
+        url: "ajax/shipmentData.php",
+        type: "POST",
+        context: e.target,
+        data: dataRequest,
+        success: success,
+        error: error
+    });
+
+    function success(data) {
+
+        switch(data['type']) {
+            case "remove":
+                $(this).parents("tr").remove();
+                textOutput.get(0).innerHTML = "Товар <b>" + data['title'] + "</b> был удалён";
+            break;
+            case "update":
+                textOutput.get(0).innerHTML = "Данные изменены";
+            break;
+            case "add":
+                if(data && typeof data == 'object') {
+
+                    var discountChecked = "",
+                        newsChecked = "";
+
+                    $("#inputShipment").find("input").val("");
+                    $("#inputShipment").find("textarea").val("");
+                    $("#inputShipment").find("input:checked").attr("checked", false);
+
+                    if(parseInt(data['news'])) {
+                        newsChecked = "checked";
+                    }
+
+                    if(parseInt(data['discount'])) {
+                        discountChecked = "checked";
+                    }
+
+                    $("<tr>\n" + 
+                        "<td class='id'>" + data['id'] + "</td>\n" + 
+                        "<td class='title'><textarea cols=\"10\" rows=\"1\">" + data['title'] + "</textarea></td>\n" + 
+                        "<td class='url'><textarea cols=\"12\" rows=\"1\">" + data['url'] + "</textarea></td>\n" + 
+                        "<td class='image'><textarea cols=\"12\" rows=\"1\">" + data['image'] + "</textarea></td>\n" + 
+                        "<td class='id_collection'><textarea cols=\"12\" rows=\"1\">" + data['id_collection'] + "</textarea></td>\n" + 
+                        "<td class='text'><textarea cols=\"17\" rows=\"1\">" + data['text'] + "</textarea></td>\n" + 
+                        "<td class='news'><input type='checkbox' " + newsChecked + " name='" + data['url'] + "' value='" + data['url'] + "'></td>\n" + 
+                        "<td class='discount'><input type='checkbox' " + discountChecked + " name='" + data['url'] + "' value='" + data['url'] + "'></td>\n" + 
+                        "<td><span class=\"btn btn-update\" name='update_type' data-id='" + data['id'] + "'>Update</span></td>\n" + 
+                        "<td><span class=\"btn btn-remove\" name='remove_type' data-id='" + data['id'] + "'>Remove</span></td>\n" + 
+                    "</tr>").appendTo(".table-shipment");
+
+                    textOutput.get(0).innerHTML = "Товар " + data['title'] + " добавлен";
+                } else {
+                    textOutput.get(0).innerHTML = "Такой товар уже существует";
+                }
+            break;
         }
-    };
+    }
 
-    function addDataShipment(data) {
-        var row = $(this).parents("#inputShipmentData"),
-            newsChecked = "",
-            discountChecked = "";
-
-        if(data && typeof data == 'object') {
-
-            row.find("input[type='text']").val("");
-            row.find("input[type='file']").val("");
-            row.find("input[type='checkbox']").prop("checked", false);
-            row.find("textarea").val("");
-            textOutput.get(0).innerHTML = "Товар <b>" + data['title'] + "</b> был добавлен в таблицу";
-            console.log(data['news']);
-            console.log(data['discount']);
-            if(parseInt(data['news'])) {
-                newsChecked = "checked";
-            }
-
-            if(parseInt(data['discount'])) {
-                discountChecked = "checked";
-            }
-
-            $("<tr>\n" + 
-                "<td>" + data['id'] + "</td>\n" + 
-                "<td class='title'><textarea cols=\"17\" >" + data['title'] + "</textarea></td>\n" + 
-                "<td class='image'><textarea cols=\"17\" >" + data['image'] + "</textarea></td>\n" + 
-                "<td class='id_brand'><textarea cols=\"12\" >" + data['id_brand'] + "</textarea></td>\n" + 
-                "<td class='id_collection'><textarea cols=\"12\" >" + data['id_collection'] + "</textarea></td>\n" + 
-                "<td class='id_shipment'><textarea cols=\"12\" >" + data['id_shipment'] + "</textarea></td>\n" + 
-                "<td class='wood'><textarea cols=\"12\" >" + data['wood'] + "</textarea></td>\n" + 
-                "<td class='describe'><textarea cols=\"12\" >" + data['describe'] + "</textarea></td>\n" + 
-                "<td class='news'><input type='checkbox' " + newsChecked + " name='" + data['id_shipment'] + "' value='" + data['id_shipment'] + "'></td>\n" + 
-                "<td class='discount'><input type='checkbox' " + discountChecked + " name='" + data['id_shipment'] + "' value='" + data['id_shipment'] + "'></td>\n" + 
-                "<td><div class=\"btn btn-update\" type='submit' value='" + data['id'] + "'>Update</div></td>\n" + 
-                "<td><div class=\"btn btn-remove\" type='submit' value='" + data['id'] + "'>Remove</div></td>\n" + 
-            "</tr>").appendTo(".shipment-table")
-        } else {
-            textOutput.text(data);
-        }
+    function error() {
+        textOutput.get(0).innerHTML = "Запрос не удалось выполнить!";
     }
 });
+
+// **************************** end shipment ***************************************//

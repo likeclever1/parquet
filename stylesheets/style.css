@@ -876,6 +876,9 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
   .b-shipment__img {
     display: block;
     margin-bottom: 5px; }
+  .b-shipment__img img{
+    width: 100%;
+    height: auto;}
   .b-shipment__type {
     color: #00253e;
     font-size: 14px;

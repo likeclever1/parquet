@@ -3,7 +3,7 @@
 <div class="hero">
     <ul class="hero__list">
         <?php
-            require_once("functions/fetch_data_from_category.php");
+            require_once("functions/fetch_data/category.php");
 
             while($row = mysqli_fetch_assoc($categoryData)) {
                 

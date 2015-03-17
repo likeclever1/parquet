@@ -1,22 +1,20 @@
 <?php
-    require_once("functions/connect_to_bd.php");
+    require_once("functions/connect_bd.php");
 ?>
 <div class="l-menu">
     <div class="b-title">Каталог товаров</div>
         
         <ul class="l-menu__list">
             <?php
-                $query = "select * from catalog ORDER by id";
+                require_once("functions/fetch_data/category.php");
 
-                $listItems = mysqli_query($connect, $query);
+                while($row = mysqli_fetch_assoc($categoryData)) {
 
-                if(!$listItems) {
-                    die("Неудалось выполнитьзапрос".mysql_error());
-                }
+                    $linkCategory = "/catalog/". $row['url'];
 
-                while($row = mysqli_fetch_assoc($listItems)) {
                     echo "<li class=\"l-menu__item\">";
-                    echo "<a href='brand.php?type=". $row['id_type'] ."' class=\"l-menu__link\">" . $row['type'] . "</a>";
+                    echo "<a href='".$linkCategory."' class=\"l-menu__link\">" . $row['title'] . "</a>";
+
                     if(isset($_GET['type'])) {
                         if($_GET['type'] == $row['id_type']) {
 

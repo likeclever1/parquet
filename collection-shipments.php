@@ -80,6 +80,6 @@
     </div><!-- end .main -->
 
     <?php
-        require_once("include/footer.php");
+        require_once("include/footer.inc");
         require_once("include/site-footer.php");
     ?>

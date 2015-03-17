@@ -1,7 +1,7 @@
 <footer class="footer" role="contentinfo">
     <div class="container">
         <ul class="footer-nav">
-            <li class="footer-nav__item"><a href="home.php" class="footer-nav__link">на главную</a></li>
+            <li class="footer-nav__item"><a href="/" class="footer-nav__link">на главную</a></li>
             <li class="footer-nav__item"><a href="catalog.php" class="footer-nav__link">каталог товаров</a></li>
             <li class="footer-nav__item"><a href="#" class="footer-nav__link">инструкции по укладке</a></li>
             <li class="footer-nav__item"><a href="#" class="footer-nav__link">доставка</a></li>

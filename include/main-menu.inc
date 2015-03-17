@@ -1,7 +1,7 @@
 <nav class="main-menu" role="navigation">
     <div class="container">
         <ul class="main-menu__list">
-            <li><a href="index.php">на главную</a></li>
+            <li><a href="/">на главную</a></li>
             <li><a href="catalog.php">каталог товаров</a></li>
             <li><a href="#">инструкции по укладке</a></li>
             <li><a href="#">доставка</a></li>
