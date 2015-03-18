@@ -1,7 +1,7 @@
 <?php
     require_once("functions/connect_bd.php");
 
-    require_once("include/site-header.php");
+    require_once("include/site-header.inc");
 
     require_once("include/header.inc");
 
@@ -11,7 +11,7 @@
     <div class="main">
         <div class="container">
             <?php
-                require_once("include/l-menu.php");
+                require_once("include/l-menu.inc");
             ?>
 
             <article class="content" role="main">
@@ -69,12 +69,12 @@
             </article>
 
             <?php
-                require_once("include/sidebar.php");
+                require_once("include/sidebar.inc");
             ?>
         </div>
     </div><!-- end .main -->
     
     <?php
         require_once("include/footer.inc");
-        require_once("include/site-footer.php");
+        require_once("include/site-footer.inc");
     ?>

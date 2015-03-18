@@ -1,69 +1,59 @@
 <?php
     require_once("functions/connect_bd.php");
 
-    require_once("include/site-header.php");
+    require_once("include/site-header.inc");
 
     require_once("include/header.inc");
 
     require_once("include/main-menu.inc");
+
+    include("functions/get_param.php");
+
+    var_dump($categoryGET, $brandGET, $collectionGET, $shipmentGET);
 ?>
     
     <div class="main">
         <div class="container">
             <?php
-                require_once("include/l-menu.php");
+                require_once("include/l-menu.inc");
             ?>
 
             <article class="content" role="main">
-                <div class="hero">
-                    <ul class="hero__list">
-                    
+                <?php
+                    if($categoryGET) {
+                        include "include/breadcrumbs.inc";
+                    }
 
-                    <?php
-                        $img_path = 'upload/images/category/';
+                    if(!$categoryGET && !$brandGET && !$collectionGET && !$shipmentGET) {
+                        $outputSubmenu = true;
+                        require_once("include/hero.inc");
+                    }
 
-                        require_once("functions/fetch_data/category.php");
+                    if($categoryGET && !$brandGET && !$collectionGET && !$shipmentGET) {
+                        include "include/brand.inc";
+                    }
 
-                        while($row = mysqli_fetch_assoc($categoryData)) {
-                            
-                            $linkPathCategory = "catalog/". $row['url'];
+                    if($categoryGET && $brandGET && !$collectionGET && !$shipmentGET) {
+                        include "include/collection.inc";
+                    }
 
-                            echo "<li class=\"hero__item\">";
-                            echo "<a href='".$linkPathCategory."' class='hero__link'>";
-                            echo "<img src='".$img_path.$row['image']."' alt='".$row['title']."'>";
-                            echo "<span>".$row['title']."</span>";
-                            echo "</a>";
+                    if($categoryGET && $brandGET && $collectionGET && !$shipmentGET) {
+                        include "include/shipments.inc";
+                    }
 
-                            $queryBrand = "select distinct url, title from brand where `id_category` = '". $row['id'] ."'";
-                            $brandData = mysqli_query($connect, $queryBrand);
-                            if(!$brandData) {die("Не удалось выполнить запрос, чтобы получить список брендов!");}
-
-                            echo "<ul>";
-
-                            while($itemBrand = mysqli_fetch_assoc($brandData)) {
-
-                                $linkPathBrand = "catalog/". $row['url'] ."/".$itemBrand['url'];
-
-                                echo "<li>";
-                                echo "<a href='".$linkPathBrand."'>".$itemBrand['title']."</a>";
-                                echo "</li>";
-                            }
-                            echo "</ul>";
-
-                            echo "</li>";
-                        }
-                    ?>
-                    </ul><!-- end .catalog -->
-                </div><!-- end .hero -->
+                    if($categoryGET && $brandGET && $collectionGET && $shipmentGET) {
+                        include "include/shipment.inc";
+                    }
+                ?>
             </article>
 
             <?php
-                require_once("include/sidebar.php");
+                require_once("include/sidebar.inc");
             ?>
         </div>
     </div><!-- end .main -->
     
     <?php
         require_once("include/footer.inc");
-        require_once("include/site-footer.php");
+        require_once("include/site-footer.inc");
     ?>

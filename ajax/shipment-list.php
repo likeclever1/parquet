@@ -1,19 +1,18 @@
 <?php
-    require_once("../functions/connect_to_bd.php");
-    $limit = 10;
+    require_once("../functions/connect_bd.php");
+    $limit = 4;
     if(isset($_POST['limit'])) {
         $limit = $_POST['limit'];
-
     }
 
     if(isset($_POST['collection'])) {
-        $collectionGet = $_POST['collection'];
+        $collectionGET = $_POST['collection'];
     }
 
-    $queryCollection = "select * from `brand` where `id_collection`='".$collectionGet."'";
+    $queryCollection = "select * from `brand` where `url`='".$collectionGET."'";
     $collection = mysqli_fetch_assoc(mysqli_query($connect, $queryCollection));
 
-    $shipments = mysqli_query($connect, "select * from `shipment` where `id_collection`='".$collectionGet."' ORDER BY `title` limit ".$limit." ");
+    $shipments = mysqli_query($connect, "select * from `shipment` where `id_collection`='".$collectionGET."' ORDER BY `title` limit ".$limit." ");
 
     while($shipment = mysqli_fetch_assoc($shipments)) {
         echo "<li class='shipment-list__item'>";

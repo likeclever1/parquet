@@ -160,6 +160,11 @@ article ul {
       left: 0;
       top: 2px; }
 article ol {
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 300;
+  color: #000;
   margin: 10px 0 10px 15px; }
 article table {
   margin: 0 0 20px 0;
@@ -942,8 +947,7 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
     ========================================================================== */
 .brand-list {
   list-style-type: none;
-  margin-left: -25px;
-  margin: 25px 0 0px; }
+  margin: 25px 0 0 -25px; }
   .brand-list__item {
     float: left;
     margin: 0 0 25px 25px;
@@ -987,7 +991,9 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
       content: "-";
       text-indent: 0;
       background: none; }
-
+.collection__nav a:visited{
+  color: #fff;
+}
 .collection-list {
   list-style-type: none;
   margin-left: -25px; }
@@ -1056,6 +1062,10 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
     margin-bottom: 5px;
     border-bottom: 1px solid #c4c4c4;
     overflow: hidden; }
+  .shipment-list__img img{
+    width: 100%;
+    height: auto;
+  }
   .shipment-list__info {
     padding: 0 5px; }
     .shipment-list__info h3 {
@@ -1079,7 +1089,9 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     text-transform: uppercase; }
-
+  .shipment-list__control .btn:visited{
+    color: #244e6b !important;
+  }
 .shipment__img {
   overflow: hidden;
   display: block;

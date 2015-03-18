@@ -75,4 +75,15 @@
             "opacity": 1
         }, 200);
     };
+
+    if($(".shipment-list__info").length) {
+        var height = 0;
+        $(".shipment-list__info").each(function() {
+            if($(this).height() > height) {
+                height = $(this).height();
+            }
+        });
+
+        $(".shipment-list__info").height(height);
+    }
 })(jQuery);

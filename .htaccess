@@ -4,5 +4,8 @@ RewriteEngine on
 
 RewriteBase /
 
+RewriteRule catalog/([^/]+)/([^/]+)/([^/]+)/([^/]+) catalog.php?category=$1&brand=$2&collection=$3&shipment=$4 [L]
+RewriteRule catalog/([^/]+)/([^/]+)/([^/]+) catalog.php?category=$1&brand=$2&collection=$3 [L]
 RewriteRule catalog/([^/]+)/([^/]+) catalog.php?category=$1&brand=$2 [L]
 RewriteRule catalog/([^/]+) catalog.php?category=$1 [L]
+RewriteRule catalog catalog.php [L]

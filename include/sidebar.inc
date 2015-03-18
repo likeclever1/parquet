@@ -22,7 +22,7 @@
                     $typeData = mysqli_fetch_assoc(mysqli_query($connect, "select * from `category` where `id`='".$brandData['id_category']."'"));
             ?>
                     <li class='info-block__item'>
-                        <a href='/catalog/<?=$typeData['url']."/".$brandData['url']."/".$row['url'];?>' class='b-shipment'>
+                        <a href='/catalog/<?=$typeData['url']."/".$brandData['url']."/".$collectionData['url']."/".$row['url'];?>' class='b-shipment'>
                         <div class='b-shipment__img'>
                             <img src='/upload/images/shipment/<?=$row['image'];?>' alt='<?=$row['title'];?>'>
                         </div>
@@ -48,21 +48,20 @@
                     $collectionData = mysqli_fetch_assoc(mysqli_query($connect, "select * from `collection` where `id`='".$row['id_collection']."'"));
                     $brandData = mysqli_fetch_assoc(mysqli_query($connect, "select * from `brand` where `id`='".$collectionData['id_brand']."'"));
                     $typeData = mysqli_fetch_assoc(mysqli_query($connect, "select * from `category` where `id`='".$brandData['id_category']."'"));
+            ?>
+                    <li class='info-block__item'>
+                        <a href='/catalog/<?=$typeData['url']."/".$brandData['url']."/".$collectionData['url']."/".$row['url'];?>' class='b-shipment'>
+                        <div class='b-shipment__img'>
+                            <img src='/upload/images/shipment/<?=$row['image'];?>' alt='<?=$row['title'];?>'>
+                        </div>
 
-                    echo "<li class='info-block__item'>";
-                    // echo "<a href='shipment.php?shipment=".$row['id_shipment']."' class='b-shipment'>";
-                    echo "<a href='index.php?type=".$typeData['url']."&brand=".$brandData['url']."&shipment=".$row['url']."' class='b-shipment'>";
+                        <div class='b-shipment__type'><b><?=$typeData["title"]." ".$brandData["title"];?></b></div>
+                        <div class='b-shipment__country'>(<?=$brandData["country"];?>)</div>
+                        <div class='b-shipment__title'><?=$row["title"];?></div>
 
-                    echo "<div class='b-shipment__img'>";
-                    echo "<img src='/upload/images/shipment/".$row['image']."' alt='".$row['title']."' '>";
-                    echo "</div>";
-
-                    echo "<div class='b-shipment__type'><b>Паркетная доска ".$brandData["title"]."</b></div>";
-                    echo "<div class='b-shipment__country'>(".$brandData["country"].")</div>";
-                    echo "<div class='b-shipment__title'>".$row["title"]."</div>";
-
-                    echo "</a>";
-                    echo "</li>";
+                        </a>
+                    </li>
+            <?php
                 }
             ?>
         </ul>
