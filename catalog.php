@@ -1,59 +1,51 @@
 <?php
-    require_once("functions/connect_bd.php");
+    require_once("controller/connect_bd.php");
+    include("controller/get_param.php");
+    require_once("view/part/site-header.tpl");
+    require_once("view/part/header.tpl");
+    require_once("view/part/main-menu.tpl");
 
-    require_once("include/site-header.inc");
-
-    require_once("include/header.inc");
-
-    require_once("include/main-menu.inc");
-
-    include("functions/get_param.php");
-
-    var_dump($categoryGET, $brandGET, $collectionGET, $shipmentGET);
+    //var_dump($categoryGET, $brandGET, $collectionGET, $shipmentGET);
 ?>
     
     <div class="main">
         <div class="container">
-            <?php
-                require_once("include/l-menu.inc");
-            ?>
+            <?php require_once("view/part/l-menu.tpl");?>
 
             <article class="content" role="main">
                 <?php
                     if($categoryGET) {
-                        include "include/breadcrumbs.inc";
+                        include "view/part/breadcrumbs.tpl";
                     }
 
                     if(!$categoryGET && !$brandGET && !$collectionGET && !$shipmentGET) {
                         $outputSubmenu = true;
-                        require_once("include/hero.inc");
+                        require_once("view/part/hero.tpl");
                     }
 
                     if($categoryGET && !$brandGET && !$collectionGET && !$shipmentGET) {
-                        include "include/brand.inc";
+                        include "view/catalog/category.tpl";
                     }
 
                     if($categoryGET && $brandGET && !$collectionGET && !$shipmentGET) {
-                        include "include/collection.inc";
+                        include "view/catalog/brand.tpl";
                     }
 
                     if($categoryGET && $brandGET && $collectionGET && !$shipmentGET) {
-                        include "include/shipments.inc";
+                        include "view/catalog/collection.tpl";
                     }
 
                     if($categoryGET && $brandGET && $collectionGET && $shipmentGET) {
-                        include "include/shipment.inc";
+                        include "view/catalog/shipment.tpl";
                     }
                 ?>
             </article>
 
-            <?php
-                require_once("include/sidebar.inc");
-            ?>
+            <?php require_once("view/part/sidebar.tpl"); ?>
         </div>
     </div><!-- end .main -->
     
     <?php
-        require_once("include/footer.inc");
-        require_once("include/site-footer.inc");
+        require_once("view/part/footer.tpl");
+        require_once("view/part/site-footer.tpl");
     ?>

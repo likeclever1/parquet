@@ -51,7 +51,7 @@
 
     if(!isset($type)) die("Warning error brandData.php bad value type");
 
-    require_once("../../functions/connect_bd.php");
+    require_once("../../controller/connect_bd.php");
 
     switch ($type) {
         case 'remove':
@@ -125,4 +125,3 @@
         default:
             break;
     }
-?>

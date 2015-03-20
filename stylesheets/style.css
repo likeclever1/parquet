@@ -87,9 +87,9 @@ article h1 {
   font-family: "Roboto", sans-serif;
   font-size: 18px;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 24px;
   color: #00253e;
-  margin: 20px 0; }
+  margin: 10px 0 20px 0; }
 article h2 {
   font-family: "Roboto", sans-serif;
   font-size: 13px;
@@ -632,10 +632,13 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
   float: left;
   font-style: italic;
   text-align: center;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 1.2;
   padding-top: 30px;
   margin-right: 16px;
+  font-family: monospace;
+  width: 260px;
+  text-align: center;
   color: #00253e; }
 
 .logo {
@@ -903,6 +906,7 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
     breadcrumbs
 ====================================================== */
 .breadcrumbs {
+  margin-top: 0;
   padding: 0 5px;
   height: 45px;
   list-style-type: none;
@@ -1128,8 +1132,12 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
   background-color: #5da9dd;
   border: 1px solid #4d8eba;
   border-bottom: none;
+  cursor: pointer;
   border-top-left-radius: 5px;
   height: 36px; }
+  .tabs__nav-link:visited{
+    color: #fff;
+  }
   .tabs__nav-link:after {
     background: url("../images/design/sprite-icon.png") no-repeat -73px -169px;
     width: 31px;
@@ -1142,7 +1150,6 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
     border-color: #1272b5; }
     .tabs__nav-link:hover:after {
       background-position: -73px -207px; }
-
 /*  ============================================================================
     contact-list
     ========================================================================== */
@@ -1206,6 +1213,13 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
     .hero__item_active .hero__link {
       background-color: #1273b5;
       color: #fff; }
+  .hero__item li{
+    padding-left: 0;
+    font-size: 14px;
+  }
+  .hero__item li:before{
+    display: none;
+  }
   .hero__link {
     border: 1px solid #c4c4c4;
     border-radius: 5px;
@@ -1314,6 +1328,11 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
   cursor: not-allowed;
   background-color: #fff;
   border-color: #ddd; }
+
+.flexEmbed{
+  width: 100%;
+  height: 450px;
+}
 
 /* ======================================================
     Grid System

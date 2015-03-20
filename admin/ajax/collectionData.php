@@ -43,9 +43,15 @@
         $feature = null;
     }
 
+    if(isset($_POST['text'])) {
+        $text = $_POST['text'];
+    } else {
+        $text = null;
+    }
+
     if(!isset($type)) die("Warning error collectionData.php bad value type");
 
-    require_once("../../functions/connect_bd.php");
+    require_once("../../controller/connect_bd.php");
 
     switch ($type) {
         case 'remove':
@@ -68,7 +74,7 @@
 
         case 'update':
 
-            $queryUpdate = "update `collection` set `title`='".$title."', `id_brand`='".$idBrand."', `url`='".$url."', `image`='".$image."', `feature`='".$feature."' where id = '".$id."'";
+            $queryUpdate = "update `collection` set `title`='".$title."', `id_brand`='".$idBrand."', `url`='".$url."', `image`='".$image."', `feature`='".$feature."', `text`='".$text."' where id = '".$id."'";
             $resultUpdate = mysqli_query($connect, $queryUpdate) or die("can't update").mysqli_error();
 
             $responseUpdateData = array(
@@ -78,7 +84,8 @@
                 "id_brand" => $idBrand,
                 "url" => $url,
                 "image" => $image,
-                "feature" => $feature
+                "feature" => $feature,
+                "text" => $text
             );
             header("Content-type: application/json");
             echo json_encode($responseUpdateData);
@@ -94,7 +101,7 @@
                 echo json_encode(array("type" => $type, "data" => false));
             } else {
 
-                $queryAdd = "insert into `".$tbl_name."` (`title`, `url`, `image`, `id_brand`, `feature`, `id`) values ('".$title."', '".$url."', '".$image."', '".$idBrand."', '".$feature."', null)";
+                $queryAdd = "insert into `".$tbl_name."` (`title`, `url`, `image`, `id_brand`, `feature`, `text`, `id`) values ('".$title."', '".$url."', '".$image."', '".$idBrand."', '".$feature."',  '".$text."', null)";
                 $resultAdd = mysqli_query($connect, $queryAdd);
 
                 $id = mysqli_fetch_assoc(mysqli_query($connect, "select id from `collection` where url='".$url."'"))['id'];
@@ -107,6 +114,7 @@
                     "image" => $image,
                     "id_brand" => $idBrand,
                     "feature" => $feature,
+                    "text" => $text,
                     "data" => true
                 );
                 header("Content-type: application/json");
@@ -117,4 +125,3 @@
         default:
             break;
     }
-?>

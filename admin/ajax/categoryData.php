@@ -31,9 +31,15 @@
         $image = null;
     }
 
+    if(isset($_POST['text'])) {
+        $text = $_POST['text'];
+    } else {
+        $text = null;
+    }
+
     if(!isset($type)) die("Warning error categoryData.php bad value type");
 
-    require_once("../../functions/connect_bd.php");
+    require_once("../../controller/connect_bd.php");
 
     switch ($type) {
         case 'remove':
@@ -56,7 +62,7 @@
 
         case 'update':
 
-            $queryUpdate = "update `".$tbl_name."` set `title`='".$title."', `url`='".$url."', `image`='".$image."' where id = '".$id."'";
+            $queryUpdate = "update `".$tbl_name."` set `title`='".$title."', `url`='".$url."', `image`='".$image."', `text`='".$text."' where id = '".$id."'";
             $resultUpdate = mysqli_query($connect, $queryUpdate);
 
             $responseUpdateData = array(
@@ -64,7 +70,8 @@
                 "id" => $id,
                 "title" => $title,
                 "url" => $url,
-                "image" => $image
+                "image" => $image,
+                "text" => $text
             );
             header("Content-type: application/json");
             echo json_encode($responseUpdateData);
@@ -80,7 +87,7 @@
                 echo json_encode(array("type" => $type, "data" => false));
             } else {
 
-                $queryAdd = "insert into `".$tbl_name."` (`url`, `title`, `image`, `id`) values ('".$url."', '".$title."', '".$image."', null)";
+                $queryAdd = "insert into `".$tbl_name."` (`url`, `title`, `image`, `text`, `id`) values ('".$url."', '".$title."', '".$image."', '".$text."', null)";
                 $resultAdd = mysqli_query($connect, $queryAdd);
 
                 $id = mysqli_fetch_assoc(mysqli_query($connect, "select id from category where url='".$url."'"))['id'];
@@ -91,6 +98,7 @@
                     "title" => $title,
                     "url" => $url,
                     "image" => $image,
+                    "text" => $text,
                     "data" => true
                 );
                 header("Content-type: application/json");
@@ -101,4 +109,3 @@
         default:
             break;
     }
-?>

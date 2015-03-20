@@ -6,8 +6,8 @@
     border: none;
 }
 
-table{
-
+body{
+    background-color: #eaeaea;
 }
 
 th, td{
@@ -126,4 +126,17 @@ input[type="text"]{
     color: red;
     font-weight: bold;
     font-size: 18px;
+}
+
+.text{
+    width: 1200px;
+}
+
+.redactor-box{
+    float: left;
+    width: 960px;
+}
+
+.redactor-editor{
+    height: 600px;
 }

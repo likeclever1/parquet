@@ -1,5 +1,5 @@
 <?php
-    require_once("../functions/connect_bd.php");
+    require_once("../controller/connect_bd.php");
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -9,6 +9,8 @@
 
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/jquery.fancybox.css">
+    <link rel="stylesheet" href="redactor/redactor.css" />
 </head>
 <body>
     <article class="main">
@@ -21,12 +23,13 @@
                     <th>title</th>
                     <th>url</th>
                     <th>image</th>
+                    <th>text</th>
                     <th>Update</th>
                     <th>Delete</th>
                 </tr>
                 <?php
 
-                    require_once("../functions/fetch_data/category.php");
+                    require_once("../controller/fetch_data/category.php");
 
                     while($categoryRow = mysqli_fetch_assoc($categoryData)) {
                         echo "<tr>";
@@ -34,6 +37,7 @@
                         echo "<td class='title'><textarea cols=\"30\" rows=\"1\">".$categoryRow['title']."</textarea></td>";
                         echo "<td class='url'><textarea cols=\"30\" rows=\"1\">".$categoryRow['url']."</textarea></td>";
                         echo "<td class='image'><textarea cols=\"30\" rows=\"1\">".$categoryRow['image']."</textarea></td>";
+                        echo "<td class='text'><textarea cols=\"30\" rows=\"1\">".$categoryRow['text']."</textarea></td>";
                         echo "<td><span class=\"btn btn-update\" data-id='".$categoryRow['id']."'>Update</span></td>";
                         echo "<td><span class=\"btn btn-remove\" data-id='".$categoryRow['id']."'>Remove</span></td>";
                         echo "</tr>";
@@ -53,6 +57,10 @@
                     <div class="image row">
                         <label for="">image</label>
                         <input type="file" name="categoryImage" id="categoryImage">
+                    </div>
+                    <div class="text row">
+                        <label for="">text</label>
+                        <textarea id="redactorCategory" name="redactorCategory"></textarea>
                     </div>
                     <div class="row">
                         <span class="fl-left btn btn-add">ADD</span>
@@ -79,7 +87,7 @@
                 </tr>
                 <?php
 
-                    require_once("../functions/fetch_data/brand.php");
+                    require_once("../controller/fetch_data/brand.php");
 
                     while($brandRow = mysqli_fetch_assoc($brandData)) {
                         echo "<tr>";
@@ -146,12 +154,13 @@
                         <th>image</th>
                         <th>id_brand</th>
                         <th>feature</th>
+                        <th>text</th>
                         <th>Update</th>
                         <th>Delete</th>
                     </tr>
                     <?php
 
-                        require_once("../functions/fetch_data/collection.php");
+                        require_once("../controller/fetch_data/collection.php");
 
                         while($collectionRow = mysqli_fetch_assoc($collectionData)) {
                             echo "<tr>";
@@ -161,6 +170,7 @@
                             echo "<td class='image'><textarea cols=\"12\" rows=\"1\">".$collectionRow['image']."</textarea></td>";
                             echo "<td class='id_brand'><textarea cols=\"12\" rows=\"1\">".$collectionRow['id_brand']."</textarea></td>";
                             echo "<td class='feature'><textarea cols=\"12\" rows=\"1\">".$collectionRow['feature']."</textarea></td>";
+                            echo "<td class='text'><textarea cols=\"12\" rows=\"1\">".$collectionRow['text']."</textarea></td>";
                             echo "<td><span class=\"btn btn-update\" data-id='".$collectionRow['id']."'>Update</span></td>";
                             echo "<td><span class=\"btn btn-remove\" data-id='".$collectionRow['id']."'>Remove</span></td>";
                             echo "</tr>";
@@ -194,6 +204,10 @@
                         <label for="">feature</label>
                         <textarea id="" cols="30" rows="10"></textarea>
                     </div>
+                    <div class="text row">
+                        <label for="">text</label>
+                        <textarea id="redactorShipment"></textarea>
+                    </div>
                     <div class="row">
                         <span class="btn btn-add fl-left">ADD</span>
                         <p class="warning output" id="collectionOutput"></p>
@@ -213,6 +227,7 @@
                         <th>image</th>
                         <th>id_collection</th>
                         <th>text</th>
+                        <th>feature</th>
                         <th>news</th>
                         <th>discount</th>
                         <th>Update</th>
@@ -220,7 +235,7 @@
                     </tr>
                     <?php
 
-                        require_once("../functions/fetch_data/shipment.php");
+                        require_once("../controller/fetch_data/shipment.php");
 
                         while($shipmentRow = mysqli_fetch_assoc($shipmentData)) {
 
@@ -243,6 +258,7 @@
                             echo "<td class='image'><textarea cols=\"12\" rows=\"4\">".$shipmentRow['image']."</textarea></td>";
                             echo "<td class='id_collection'><textarea cols=\"12\" rows=\"2\">".$shipmentRow['id_collection']."</textarea></td>";
                             echo "<td class='text'><textarea cols=\"12\" rows=\"2\">".$shipmentRow['text']."</textarea></td>";
+                            echo "<td class='feature'><textarea cols=\"12\" rows=\"2\">".$shipmentRow['feature']."</textarea></td>";
                             echo "<td class='news'><input type='checkbox' name='".$shipmentRow['url']."' ".$checkedNews." value='".$shipmentRow['url']."'></td>";
                             echo "<td class='discount'><input type='checkbox' name='".$shipmentRow['url']."' ".$checkedDiscount." value='".$shipmentRow['url']."'></td>";
                             echo "<td><span class=\"btn btn-update\" data-id='".$shipmentRow['id']."'>Update</span></td>";
@@ -276,7 +292,7 @@
                     </div>
                     <div class="text row">
                         <label for="">text</label>
-                        <textarea id="" cols="30" rows="10"></textarea>
+                        <textarea id="redactorShipment"></textarea>
                     </div>
                     <div class="news row">
                         <label for="">news</label>
@@ -287,16 +303,24 @@
                         <input type="checkbox">
                     </div>
                     <div class="row">
+                        <h4><a class="fancybox" href="ajax/shipmentFeatures.php">Добавить характеристики</a></h4>
+                    </div>
+                    <div class="row">
                         <span class="btn btn-add fl-left">ADD</span>
                         <p class="warning output" id="shipmentOutput"></p>
                     </div>
                 </div>
+
+                
             </form>
         </div><!-- end .shipment -->
     </article>
-
+    
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="redactor/redactor.js"></script>
+    <script type="text/javascript" src="javascript/jquery.fancybox.pack.js"></script>
     <script type="text/javascript" src="javascript/requestData.js"></script>
+    <script type="text/javascript" src="javascript/common.js"></script>
 
 </body>
 </html>

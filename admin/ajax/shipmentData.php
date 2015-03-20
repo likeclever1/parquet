@@ -43,6 +43,12 @@
         $text = null;
     }
 
+    if(isset($_POST['feature'])) {
+        $feature = $_POST['feature'];
+    } else {
+        $feature = null;
+    }
+
     if(isset($_POST['news'])) {
         $news = $_POST['news'];
     } else {
@@ -57,7 +63,7 @@
 
     if(!isset($type)) die("Warning error shipmentData.php bad value type");
 
-    require_once("../../functions/connect_bd.php");
+    require_once("../../controller/connect_bd.php");
 
     switch ($type) {
         case 'remove':
@@ -80,7 +86,7 @@
 
         case 'update':
 
-            $queryUpdate = "update `shipment` set `title`='".$title."', `id_collection`='".$idCollection."', `url`='".$url."', `image`='".$image."', `text`='".$text."', `news`='".$news."', `discount`='".$discount."' where id = '".$id."'";
+            $queryUpdate = "update `shipment` set `title`='".$title."', `id_collection`='".$idCollection."', `url`='".$url."', `image`='".$image."', `text`='".$text."', `feature`='".$feature."', `news`='".$news."', `discount`='".$discount."' where id = '".$id."'";
             $resultUpdate = mysqli_query($connect, $queryUpdate) or die("can't update").mysqli_error();
 
             $responseUpdateData = array(
@@ -92,7 +98,8 @@
                 "id_collection" => $idCollection,
                 "news" => $news,
                 "discount" => $discount,
-                "text" => $text
+                "text" => $text,
+                "feature" => $feature
             );
             header("Content-type: application/json");
             echo json_encode($responseUpdateData);
@@ -108,7 +115,7 @@
                 echo json_encode(array("type" => $type, "data" => false));
             } else {
 
-                $queryAdd = "insert into `".$tbl_name."` (`title`, `url`, `image`, `id_collection`, `text`, `news`, `discount`, `id`) values ('".$title."', '".$url."', '".$image."', '".$idCollection."', '".$text."', '".$news."', '".$discount."' , null)";
+                $queryAdd = "insert into `".$tbl_name."` (`title`, `url`, `image`, `id_collection`, `text`, `feature`, `news`, `discount`, `id`) values ('".$title."', '".$url."', '".$image."', '".$idCollection."', '".$text."', '".$feature."', '".$news."', '".$discount."' , null)";
                 $resultAdd = mysqli_query($connect, $queryAdd);
 
                 $id = mysqli_fetch_assoc(mysqli_query($connect, "select id from `shipment` where url='".$url."'"))['id'];
@@ -133,4 +140,3 @@
         default:
             break;
     }
-?>

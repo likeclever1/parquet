@@ -33,6 +33,44 @@
         });
     }
 
+    /*
+    ** equalHeight
+    */
+   
+    function equalHeight(selector) {
+        if(selector.length) {
+            var height = 0;
+            selector.each(function() {
+                if($(this).height() > height) {
+                    height = $(this).height();
+                }
+            });
+
+            selector.height(height);
+        }
+    }
+
+    equalHeight($(".shipment-list__info"));
+
+    /*
+    ** tabs
+    */
+   
+    $(".tabs").tabsUi();
+
+    /*
+    ** fancybox
+    */
+   
+    $(".shipment__img").fancybox({
+        helpers : {
+            title : {
+                type : 'over'
+            }
+        }
+    });
+
+
     /* ==========================================================================
     AJAX
    ========================================================================== */
@@ -42,48 +80,49 @@
     */
 
     $("#selectShipments").on("change", function(e) {
-        var selected = $(this).children("option:selected").val();
+        var shipments = $(".shipment-list"),
+            selected = $(this).children("option:selected").val(),
+            collection = $(this).data("collection");
 
         
-        var w = $(".shipment-list").width();
-        var h = $(".shipment-list").height();
-        $(".shipment-list").animate({
+        var w = shipments.width();
+        var h = shipments.height();
+        shipments.animate({
             "opacity": 0
         }, 200);
 
-        $(".shipment-list").addClass("reload-block").css({
+        shipments.addClass("reload-block").css({
             "width": w,
             "height": h
         }).empty();
 
         $.ajax({
-            url: "ajax/shipment-list.php",
+            url: "/ajax/shipment-list.php",
             type: "POST",
             context: e.target,
             data: {
                 "limit": selected,
-                "collection": window.location.href.slice(window.location.href.indexOf('=') + 1).split('&')[0]
+                "collection": collection
             },
-            success: shipmentListAjax
+            success: shipmentListAjax,
+            error: errorAjax
         });
     });
 
     function shipmentListAjax(data) {
-        $(data).appendTo(".shipment-list");
-        $(".shipment-list").removeClass("reload-block");
-        $(".shipment-list").animate({
+        var shipments = $(".shipment-list");
+
+        shipments.get(0).innerHTML = data;
+        shipments.removeClass("reload-block");
+        equalHeight($(".shipment-list__info"));
+        shipments.animate({
             "opacity": 1
         }, 200);
     };
 
-    if($(".shipment-list__info").length) {
-        var height = 0;
-        $(".shipment-list__info").each(function() {
-            if($(this).height() > height) {
-                height = $(this).height();
-            }
-        });
-
-        $(".shipment-list__info").height(height);
+    function errorAjax(data) {
+        console.log(data);
     }
+
+
 })(jQuery);

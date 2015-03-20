@@ -19,17 +19,19 @@ $("#categoryForm").on("click", function(e) {
             "type": "add",
             "title": $(e.target).parents('#inputCategory').find(".title input").val(),
             "url": $(e.target).parents('#inputCategory').find(".url input").val(),
-            "image": $("#categoryImage").val().split("\\").pop()
+            "image": $("#categoryImage").val().split("\\").pop(),
+            "text": $(e.target).parents('#inputCategory').find(".text textarea").val(),
         };
 
         formData = new FormData();
         formData.append('file', $("#categoryImage").get(0).files[0]);
+        formData.append('folder', 'category');
 
         $.ajax({
             processData: false,
             cache: false,
             contentType: false,
-            url: "ajax/uploadCategoryImage.php",
+            url: "ajax/uploadImage.php",
             type: "POST",
             context: e.target,
             data: formData
@@ -41,7 +43,8 @@ $("#categoryForm").on("click", function(e) {
             "id": e.target.getAttribute('data-id'),
             "title": $(e.target).parents('tr').find(".title textarea").val(),
             "url": $(e.target).parents('tr').find(".url textarea").val(),
-            "image": $(e.target).parents('tr').find(".image textarea").val()
+            "image": $(e.target).parents('tr').find(".image textarea").val(),
+            "text": $(e.target).parents('tr').find(".text textarea").val()
         };
     }
 
@@ -56,12 +59,11 @@ $("#categoryForm").on("click", function(e) {
             "id": dataRequest['id'],
             "title": dataRequest['title'],
             "url": dataRequest['url'],
-            "image": dataRequest['image']
+            "image": dataRequest['image'],
+            "text": dataRequest['text']
         },
         success: success
     });
-
-    
 
     function success(data) {
         switch(data.type) {
@@ -76,12 +78,14 @@ $("#categoryForm").on("click", function(e) {
                 if(data['data']) {
 
                     $(this).parents("#inputCategory").find("input").val("");
+                    $(this).parents("#inputCategory").find("textarea").val("");
 
                     $("<tr>\n" + 
                         "<td class='id'>" + data['id'] + "</td>\n" + 
                         "<td class='title'><textarea cols=\"30\" rows=\"1\">" + data['title'] + "</textarea></td>\n" + 
                         "<td class='url'><textarea cols=\"30\" rows=\"1\">" + data['url'] + "</textarea></td>\n" + 
                         "<td class='image'><textarea cols=\"30\" rows=\"1\">" + data['image'] + "</textarea></td>\n" + 
+                        "<td class='text'><textarea cols=\"30\" rows=\"1\">" + data['text'] + "</textarea></td>\n" + 
                         "<td><button class=\"btn btn-update\" type='submit' name='update_type' data-id='" + data['id'] + "'>Update</button></td>\n" + 
                         "<td><button class=\"btn btn-remove\" type='submit' name='remove_type' data-id='" + data['id'] + "'>Remove</button></td>\n" + 
                     "</tr>").appendTo(".table-category");
@@ -122,12 +126,13 @@ $("#brandForm").on("click", function(e) {
 
         formData = new FormData();
         formData.append('file', $("#brandImage").get(0).files[0]);
+        formData.append('folder', 'brand');
 
         $.ajax({
             processData: false,
             cache: false,
             contentType: false,
-            url: "ajax/uploadImageBrand.php",
+            url: "ajax/uploadImage.php",
             type: "POST",
             context: e.target,
             data: formData
@@ -227,12 +232,13 @@ $("#collectionForm").on("click", function(e) {
 
         formData = new FormData();
         formData.append('file', $("#collectionImage").get(0).files[0]);
+        formData.append('folder', 'collection');
 
         $.ajax({
             processData: false,
             cache: false,
             contentType: false,
-            url: "ajax/uploadImageCollection.php",
+            url: "ajax/uploadImage.php",
             type: "POST",
             context: e.target,
             data: formData
@@ -246,7 +252,8 @@ $("#collectionForm").on("click", function(e) {
         "url": $('#inputCollection').find(".url input").val() || $target.parents("tr").find(".url textarea").val(),
         "image": $("#collectionImage").val().split("\\").pop() || $target.parents("tr").find(".image textarea").val(),
         "id_brand": $('#inputCollection').find(".id_brand input").val() || $target.parents("tr").find(".id_brand textarea").val(),
-        "feature": $('#inputCollection').find(".feature textarea").val() || $target.parents("tr").find(".feature textarea").val()
+        "feature": $('#inputCollection').find(".feature textarea").val() || $target.parents("tr").find(".feature textarea").val(),
+        "text": $('#inputCollection').find(".text textarea").val() || $target.parents("tr").find(".text textarea").val()
     };
 
     if(type != "add") {
@@ -276,8 +283,8 @@ $("#collectionForm").on("click", function(e) {
             case "add":
                 if(data && typeof data == 'object') {
 
-                    $("#inputBrand").find("input").val("");
-                    $("#inputBrand").find("textarea").val("");
+                    $("#inputCollection").find("input").val("");
+                    $("#inputCollection").find("textarea").val("");
 
                     $("<tr>\n" + 
                         "<td class='id'>" + data['id'] + "</td>\n" + 
@@ -286,6 +293,7 @@ $("#collectionForm").on("click", function(e) {
                         "<td class='image'><textarea cols=\"12\" rows=\"1\">" + data['image'] + "</textarea></td>\n" + 
                         "<td class='id_brand'><textarea cols=\"12\" rows=\"1\">" + data['id_brand'] + "</textarea></td>\n" + 
                         "<td class='feature'><textarea cols=\"17\" rows=\"1\">" + data['feature'] + "</textarea></td>\n" + 
+                        "<td class='text'><textarea cols=\"17\" rows=\"1\">" + data['text'] + "</textarea></td>\n" + 
                         "<td><button class=\"btn btn-update\" name='update_type' data-id='" + data['id'] + "'>Update</button></td>\n" + 
                         "<td><button class=\"btn btn-remove\" name='remove_type' data-id='" + data['id'] + "'>Remove</button></td>\n" + 
                     "</tr>").appendTo(".table-collection");
@@ -329,12 +337,13 @@ $("#shipmentForm").on("click", function(e) {
 
         formData = new FormData();
         formData.append('file', $("#shipmentImage").get(0).files[0]);
+        formData.append('folder', 'shipment');
 
         $.ajax({
             processData: false,
             cache: false,
             contentType: false,
-            url: "ajax/uploadImageShipment.php",
+            url: "ajax/uploadImage.php",
             type: "POST",
             context: e.target,
             data: formData
@@ -349,6 +358,7 @@ $("#shipmentForm").on("click", function(e) {
         "image": $("#shipmentImage").val().split("\\").pop() || $target.parents("tr").find(".image textarea").val(),
         "id_collection": $('#inputShipment').find(".id_collection input").val() || $target.parents("tr").find(".id_collection textarea").val(),
         "text": $('#inputShipment').find(".text textarea").val() || $target.parents("tr").find(".text textarea").val(),
+        "feature": $('#inputShipment').find(".feature textarea").val() || $target.parents("tr").find(".feature textarea").val(),
         "news": ($('#inputShipment').find(".news input").prop("checked")) ? 1 : 0,
         "discount": ($('#inputShipment').find(".discount input").prop("checked")) ? 1 : 0
     };
@@ -404,6 +414,7 @@ $("#shipmentForm").on("click", function(e) {
                         "<td class='image'><textarea cols=\"12\" rows=\"1\">" + data['image'] + "</textarea></td>\n" + 
                         "<td class='id_collection'><textarea cols=\"12\" rows=\"1\">" + data['id_collection'] + "</textarea></td>\n" + 
                         "<td class='text'><textarea cols=\"17\" rows=\"1\">" + data['text'] + "</textarea></td>\n" + 
+                        "<td class='feature'><textarea cols=\"17\" rows=\"1\">" + data['feature'] + "</textarea></td>\n" + 
                         "<td class='news'><input type='checkbox' " + newsChecked + " name='" + data['url'] + "' value='" + data['url'] + "'></td>\n" + 
                         "<td class='discount'><input type='checkbox' " + discountChecked + " name='" + data['url'] + "' value='" + data['url'] + "'></td>\n" + 
                         "<td><span class=\"btn btn-update\" name='update_type' data-id='" + data['id'] + "'>Update</span></td>\n" + 
