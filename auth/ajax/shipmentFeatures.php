@@ -14,7 +14,7 @@
         });
 
         function success(data) {
-            parseData = JSON.parse(data));
+            parseData = JSON.parse(data);
             $.fancybox.close();
         }
     });

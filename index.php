@@ -5,8 +5,9 @@
         $page = mysqli_real_escape_string($connect, $_GET['page']);
     } else {
         $page = null;
+        $home = true;
     }
-    
+
     require_once("view/part/site-header.tpl");
     require_once("view/part/header.tpl");
     require_once("view/part/main-menu.tpl");
@@ -20,8 +21,9 @@
             <article class="content" role="main">
                 <?php
                     
-                    if($page == null || file_exists('view/pages/'.$page.'.tpl'))
+                    if(!$page || file_exists('view/pages/'.$page.'.tpl'))
                     {
+
                         if($page == 'contact'){
                             include('view/pages/contact.tpl');
                         } else if($page == 'instructions'){
@@ -31,7 +33,7 @@
                         } else if($page == 'partners') {
                             include('view/pages/partners.tpl');
                         } else {
-                            include("view/part/hero.tpl");
+                            include('view/part/hero.tpl');
                             include('view/pages/home.tpl');
                         }
                     }

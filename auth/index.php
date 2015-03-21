@@ -13,6 +13,18 @@
     <link rel="stylesheet" href="redactor/redactor.css" />
 </head>
 <body>
+<?php if($_POST['login'] <> 'admin' && $_POST['password'] <> 'weerweer'): ?>
+    <form class="auth" method="post" action="index.php">
+    <h2>Administrator</h2>
+        <div class="row">
+            <input type="text" name="login" placeholder="login">
+            <input type="password" name="password" placeholder="password">
+        </div>
+        <div class="row">
+            <button class="btn" type="submit">Войти</button>
+        </div>
+    </form>
+<?php else: ?>
     <article class="main">
         <div class="category">
             <form action="admin.php" method="POST" id="categoryForm">
@@ -37,7 +49,7 @@
                         echo "<td class='title'><textarea cols=\"30\" rows=\"1\">".$categoryRow['title']."</textarea></td>";
                         echo "<td class='url'><textarea cols=\"30\" rows=\"1\">".$categoryRow['url']."</textarea></td>";
                         echo "<td class='image'><textarea cols=\"30\" rows=\"1\">".$categoryRow['image']."</textarea></td>";
-                        echo "<td class='text'><textarea cols=\"30\" rows=\"1\">".$categoryRow['text']."</textarea></td>";
+                        echo "<td class='text'><textarea cols=\"80\" rows=\"10\">".$categoryRow['text']."</textarea></td>";
                         echo "<td><span class=\"btn btn-update\" data-id='".$categoryRow['id']."'>Update</span></td>";
                         echo "<td><span class=\"btn btn-remove\" data-id='".$categoryRow['id']."'>Remove</span></td>";
                         echo "</tr>";
@@ -258,7 +270,7 @@
                             echo "<td class='image'><textarea cols=\"12\" rows=\"4\">".$shipmentRow['image']."</textarea></td>";
                             echo "<td class='id_collection'><textarea cols=\"12\" rows=\"2\">".$shipmentRow['id_collection']."</textarea></td>";
                             echo "<td class='text'><textarea cols=\"12\" rows=\"2\">".$shipmentRow['text']."</textarea></td>";
-                            echo "<td class='feature'><textarea cols=\"12\" rows=\"2\">".$shipmentRow['feature']."</textarea></td>";
+                            echo "<td class='feature'><textarea readonly cols=\"12\" rows=\"2\">".$shipmentRow['feature']."</textarea></td>";
                             echo "<td class='news'><input type='checkbox' name='".$shipmentRow['url']."' ".$checkedNews." value='".$shipmentRow['url']."'></td>";
                             echo "<td class='discount'><input type='checkbox' name='".$shipmentRow['url']."' ".$checkedDiscount." value='".$shipmentRow['url']."'></td>";
                             echo "<td><span class=\"btn btn-update\" data-id='".$shipmentRow['id']."'>Update</span></td>";
@@ -315,7 +327,9 @@
             </form>
         </div><!-- end .shipment -->
     </article>
-    
+
+<?php endif; ?>
+
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="redactor/redactor.js"></script>
     <script type="text/javascript" src="javascript/jquery.fancybox.pack.js"></script>

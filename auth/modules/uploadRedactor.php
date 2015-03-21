@@ -1,9 +1,11 @@
-<?php 
+<?php
     
     $dir = '../../upload/images/content/';
 
     $_FILES['file']['type'] = strtolower($_FILES['file']['type']);
     
+    
+
     if ($_FILES['file']['type'] == 'image/png'
         || $_FILES['file']['type'] == 'image/jpg'
         || $_FILES['file']['type'] == 'image/gif'

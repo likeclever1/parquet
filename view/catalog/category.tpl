@@ -5,7 +5,7 @@
 
 ?>
 
-<?php if(!mysqli_fetch_assoc(mysqli_query($connect,"select * from `brand` where `id_category` = '".$categoryData['id']."'"))['id']): ?>
+<?php if(!$categoryData): ?>
     <div class="warning ta-left">
         <h2>Данный товар не найден</h2>
     </div>

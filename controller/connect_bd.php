@@ -2,8 +2,8 @@
     
     $db_host = 'localhost';
     $db_name = 'parquet';
-    $db_user = 'yb';
-    $db_password = '123';
+    $db_user = 'root';
+    $db_password = 'weerweer';
 
     $connect = mysqli_connect($db_host, $db_user, $db_password);
 

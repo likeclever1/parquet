@@ -3,8 +3,8 @@
     $resourseDiscountItem = mysqli_query($connect, "select * from shipment where `discount`= 1");
     $resourseNewsItem = mysqli_query($connect, "select * from shipment where `news`= 1");
 
-    $discountLength = mysqli_query($connect, "SELECT count(*) as total from shipment where `discount`= 1");
-    $newsLength = mysqli_query($connect, "SELECT count(*) as total from shipment where `news`= 1");
+    $discountLength = (int) mysqli_fetch_assoc(mysqli_query($connect, "SELECT count(*) as total from shipment where `discount`= 1"))['total'];
+    $newsLength = (int) mysqli_fetch_assoc(mysqli_query($connect, "SELECT count(*) as total from shipment where `news`= 1"))['total'];
     $discountTotal = mysqli_fetch_assoc($discountLength)['total'];
     $newsTotal = mysqli_fetch_assoc($newsLength)['total'];
 
@@ -14,7 +14,7 @@
     <div class="info-block">
         <div class="b-title ta-center">Акции</div>
         
-        <ul class="info-block__list">
+        <ul class="info-block__list <?php if($discountLength > 4 ) echo "bxslider"; ?>">
             <?php
                 while( $row = mysqli_fetch_assoc($resourseDiscountItem) ) {
                     $collectionData = mysqli_fetch_assoc(mysqli_query($connect, "select * from `collection` where `id`='".$row['id_collection']."'"));
@@ -42,7 +42,7 @@
     <div class="info-block">
         <div class="b-title ta-center">Новинки</div>
         
-        <ul class="info-block__list">
+        <ul class="info-block__list <?php if($newsLength > 4 ) echo "bxslider"; ?>">
             <?php
                 while( $row = mysqli_fetch_assoc($resourseNewsItem) ) {
                     $collectionData = mysqli_fetch_assoc(mysqli_query($connect, "select * from `collection` where `id`='".$row['id_collection']."'"));

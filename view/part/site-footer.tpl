@@ -7,6 +7,7 @@
         
         <script type="text/javascript" src="/javascript/plugins/jquery.tabsUi.js"></script>
         <script type="text/javascript" src="/javascript/plugins/jquery.fancybox.pack.js"></script>
+        <script type="text/javascript" src="/javascript/plugins/jquery.bxslider.min.js"></script>
         <script type="text/javascript" src="/javascript/common.js"></script>
     </body>
 </html>

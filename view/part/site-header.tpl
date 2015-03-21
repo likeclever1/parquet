@@ -13,6 +13,7 @@
 
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,700,400&amp;subset=cyrillic-ext' rel='stylesheet' type='text/css'>
     <link type='text/css' rel="stylesheet" href="/stylesheets/jquery.fancybox.css">
+    <link type='text/css' rel="stylesheet" href="/stylesheets/jquery.bxslider.css">
     <link type='text/css' rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body class="condition-without-js">
