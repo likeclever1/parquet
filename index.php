@@ -28,10 +28,14 @@
                             include('view/pages/contact.tpl');
                         } else if($page == 'instructions'){
                             include('view/pages/instructions.tpl');
+                        } else if($page == 'packing'){
+                            include('view/pages/packing.tpl');
                         } else if($page == 'delivery') {
                             include('view/pages/delivery.tpl');
                         } else if($page == 'partners') {
                             include('view/pages/partners.tpl');
+                        } else if($page == 'gallery') {
+                            include('view/pages/gallery.tpl');
                         } else {
                             include('view/part/hero.tpl');
                             include('view/pages/home.tpl');

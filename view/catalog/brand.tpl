@@ -2,7 +2,6 @@
 <?php
     $categoryData = mysqli_fetch_assoc(mysqli_query($connect, "select * from `category` where url = '".$categoryGET."'"));
     $brandData = mysqli_fetch_assoc(mysqli_query($connect, "select * from `brand` where url = '".$brandGET."'"));
-    $collectionQuery = mysqli_query($connect, "select * from `collection` where `id_brand` = '".$brandData['id']."'");
 
     $brandTitle = $brandData['title'];
     $brandImage = $brandData['image'];
@@ -14,6 +13,17 @@
 
     $categoryTitle = $categoryData['title'];
     $categoryUrl = $categoryData['url'];
+
+    $collectionData = [];
+    $collectionQuery = mysqli_query($connect, "select * from `collection` where `id_brand` = '".$brandData['id']."'");
+
+    while($row = mysqli_fetch_assoc($collectionQuery)) {
+        $row['total'] = mysqli_fetch_assoc(mysqli_query($connect, "select count(`id_collection`) as total from `shipment` where `id_collection`='".$row['id']."'"))['total'];
+        array_push($collectionData, $row);
+    }
+
+    $prevRecord = mysqli_fetch_assoc(mysqli_query($connect, "select * from `brand` where (`id` < '".$brandId."' AND `id_category` = '".$brandIdcategory."') ORDER BY id DESC LIMIT 1"));
+    $nextRecord = mysqli_fetch_assoc(mysqli_query($connect, "select * from `brand` where (`id` > '".$brandId."' AND `id_category` = '".$brandIdcategory."') ORDER BY id ASC LIMIT 1"));
 ?>
 
 <?php if(!$brandData): ?>
@@ -29,26 +39,22 @@
     </div>
 
     <ul class="collection-list">
-    <?php while($row = mysqli_fetch_assoc($collectionQuery)): ?>
-
+    <?php for($i = 0, $collectionLength = count($collectionData); $i < $collectionLength; $i++): ?>
         <li class='collection-list__item'>
-            <a href='/catalog/<?=$categoryUrl;?>/<?=$brandUrl;?>/<?=$row['url'];?>' class='collection-list__link'>
+            <a href='/catalog/<?=$categoryUrl;?>/<?=$brandUrl;?>/<?=$collectionData[$i]['url'];?>' class='collection-list__link'>
                 <span class='collection-list__img'>
-                    <img src='/upload/images/collection/<?=$row['image'];?>' alt='<?=$row['title'];?>'>
+                    <img src='/upload/images/collection/<?=$collectionData[$i]['image'];?>' alt='<?=$collectionData[$i]['title'];?>'>
                 </span>
-                <span class='collection-list__title'><?=$brandTitle;?> <?=$row['title'];?></span>
-                <span class='hint'><?=$row['feature'];?></span>
+                <span class='collection-list__title'><?=$brandTitle;?> <?=$collectionData[$i]['title'];?></span>
+                <span class='hint'><?=$collectionData[$i]['feature'];?></span>
+                <span class='counter'> <?=$collectionData[$i]['total'];?> </span>
             </a>
         </li>
 
-    <?php endwhile; ?>
+    <?php endfor; ?>
     </ul>
 
     <div class='collection__nav'>
-        <?php
-            $prevRecord = mysqli_fetch_assoc(mysqli_query($connect, "select * from `brand` where (`id` < '".$brandId."' AND `id_category` = '".$brandIdcategory."') ORDER BY id DESC LIMIT 1"));
-            $nextRecord = mysqli_fetch_assoc(mysqli_query($connect, "select * from `brand` where (`id` > '".$brandId."' AND `id_category` = '".$brandIdcategory."') ORDER BY id ASC LIMIT 1"));
-        ?>
         <?php if(isset($prevRecord)): ?>
             <a href='/catalog/<?=$categoryUrl;?>/<?=$prevRecord['url'];?>' class='btn-arrow btn-arrow_left fl-left'>Предыдущий бренд</a>
         <?php endif ?>

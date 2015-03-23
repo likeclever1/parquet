@@ -741,6 +741,12 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
   padding-top: 20px;
   margin-bottom: 20px;
   border-bottom: 1px solid #5a5a5a; }
+  .footer-nav__item.active{
+    color: #fff;
+  }
+  .footer-nav__item.active .footer-nav__link{
+    color: #fff;
+  }
   .footer-nav__link {
     color: #98b2c3;
     font-size: 12px;
@@ -775,9 +781,9 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
     .main-menu__list li {
       float: left;
       list-style-type: none;
-      border-right: 1px solid #4798cf; }
+      border-right: 1px solid #5985A1; }
       .main-menu__list li.current a {
-        background-color: #4798cf; }
+        background-color: #5985A1; }
     .main-menu__list a {
       text-transform: uppercase;
       text-decoration: none;
@@ -786,7 +792,7 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
       padding: 30px; }
       .main-menu__list .active,
       .main-menu__list a:hover {
-        background-color: #4798cf; }
+        background-color: #5985A1; }
   .main-menu .worktime {
     float: right;
     width: 246px;
@@ -861,7 +867,7 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
     margin-bottom: 4px;
     text-decoration: none; }
     .l-menu__sublink:before {
-      border: 4px solid #1273b5;
+      border: 4px solid #4C728B;
       border-top-color: transparent;
       border-bottom-color: transparent;
       border-right-color: transparent;
@@ -879,7 +885,7 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
 
 .info-block {
   border-radius: 5px 5px 0 0;
-  background-color: #ededed;
+  background-color: #e2e2e2;
   margin-bottom: 20px; }
   .info-block .b-title {
     border-bottom-right-radius: 0;
@@ -980,7 +986,7 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
       .brand-list__item a:hover {
         text-decoration: underline; }
         .brand-list__item a:hover .brand-list__img {
-          border-color: #1273b5; }
+          border-color: #4C728B; }
   .brand-list__img {
     border-radius: 5px;
     height: 110px;
@@ -1177,12 +1183,14 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
     border-left: 1px dashed #c4c4c4;
     padding: 0;
     margin: 0 0 0 0;
+    min-height: 80px;
     padding-left: 40px; }
     .contact-list__item:first-child {
       border-left: none;
       padding-left: 20px; }
     .contact-list__item li {
       padding: 0;
+      line-height: 18px;
       margin: 0; }
       .contact-list__item li:before {
         display: none; }
@@ -1226,7 +1234,7 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
     .hero__item:before {
       display: none; }
     .hero__item_active .hero__link {
-      background-color: #1273b5;
+      background-color: #4C728B;
       color: #fff; }
   .hero__item li{
     padding-left: 0;
@@ -1259,10 +1267,7 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
       text-align: center;
       vertical-align: middle; }
     .hero__link:hover {
-      background-color: #1273b5;
-      color: #fff; }
-    .hero__link:hover {
-      background-color: #1273b5;
+      background-color: #4C728B;
       color: #fff; }
 
 /* ======================================================
@@ -1276,7 +1281,7 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
   width: 34px;
   height: 34px;
   position: fixed;
-  background-color: #1273b5;
+  background-color: #4C728B;
   right: 2px;
   bottom: 25px;
   display: block;

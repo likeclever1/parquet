@@ -20,7 +20,14 @@
     $collectionText = $collectionData['text'];
 
     $limit = 10000;
-    $shipments = mysqli_query($connect, "select * from `shipment` where `id_collection`='".$collectionId."' ORDER BY `title` limit ".$limit." ");
+    
+    $shipmentsData = [];
+    $shipmentsQuery = mysqli_query($connect, "select * from `shipment` where `id_collection`='".$collectionId."' ORDER BY `title` limit ".$limit." ");
+
+    while($row = mysqli_fetch_assoc($shipmentsQuery)) {
+        $row['total'] = mysqli_fetch_assoc(mysqli_query($connect, "select count(`id_collection`) as total from `shipment` where `id_collection`='".$row['id']."'"))['total'];
+        array_push($shipmentsData, $row);
+    }
 ?>
 <?php if(!$collectionData): ?>
     <div class="warning ta-left">
@@ -48,22 +55,22 @@
     </div>
 
     <ul class="shipment-list">
-        <?php while($row = mysqli_fetch_assoc($shipments)): ?>
+        <?php for($i = 0, $len = count($shipmentsData); $i < $len; $i++): ?>
             <li class='shipment-list__item'>
                 <div class='shipment-list__content'>
-                    <a href='/catalog/<?=$categoryUrl;?>/<?=$brandUrl;?>/<?=$collectionUrl;?>/<?=$row['url'];?>' class='shipment-list__img'>
-                        <img src='/upload/images/shipment/<?=$row['image'];?>' alt='<?=$row['title'];?>' title='<?=$row['title'];?>'>
+                    <a href='/catalog/<?=$categoryUrl;?>/<?=$brandUrl;?>/<?=$collectionUrl;?>/<?=$shipmentsData[$i]['url'];?>' class='shipment-list__img'>
+                        <img src='/upload/images/shipment/<?=$shipmentsData[$i]['image'];?>' alt='<?=$shipmentsData[$i]['title'];?>' title='<?=$shipmentsData[$i]['title'];?>'>
                     </a>
                     <div class='shipment-list__info'>
-                        <h3><a href='/catalog/'><?=$row['title'];?></a></h3>
-                        <p><?=$brandTitle;?> <?=$row['title'];?> коллекция <?=$collectionTitle;?></p>
+                        <h3><a href='/catalog/'><?=$shipmentsData[$i]['title'];?></a></h3>
+                        <p><?=$brandTitle;?> <?=$shipmentsData[$i]['title'];?> коллекция <?=$collectionTitle;?></p>
                     </div>
                 </div>
                 <div class='shipment-list__control'>
-                    <a href='/catalog/<?=$categoryUrl;?>/<?=$brandUrl;?>/<?=$collectionUrl;?>/<?=$row['url'];?>' class='btn'>Подробнее</a>
+                    <a href='/catalog/<?=$categoryUrl;?>/<?=$brandUrl;?>/<?=$collectionUrl;?>/<?=$shipmentsData[$i]['url'];?>' class='btn'>Подробнее</a>
                 </div>
             </li>
-        <?php endwhile; ?>
+        <?php endfor; ?>
     </ul>
 </div><!-- end .collection -->
 <article class="article">

@@ -1,5 +1,16 @@
 <?php
     require_once("../controller/connect_bd.php");
+    if(isset($_POST['login'])) {
+        $login = $_POST['login'];
+    } else {
+        $login = null;
+    }
+
+    if(isset($_POST['password'])) {
+        $password = $_POST['password'];
+    } else {
+        $password = null;
+    }
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -13,18 +24,7 @@
     <link rel="stylesheet" href="redactor/redactor.css" />
 </head>
 <body>
-<?php if($_POST['login'] <> 'admin' && $_POST['password'] <> 'weerweer'): ?>
-    <form class="auth" method="post" action="index.php">
-    <h2>Administrator</h2>
-        <div class="row">
-            <input type="text" name="login" placeholder="login">
-            <input type="password" name="password" placeholder="password">
-        </div>
-        <div class="row">
-            <button class="btn" type="submit">Войти</button>
-        </div>
-    </form>
-<?php else: ?>
+<?php if($login === 'admin' && $password === 'weerweer'): ?>
     <article class="main">
         <div class="category">
             <form action="admin.php" method="POST" id="categoryForm">
@@ -327,6 +327,18 @@
             </form>
         </div><!-- end .shipment -->
     </article>
+    
+<?php else: ?>
+    <form class="auth" method="post" action="index.php">
+    <h2>Administrator</h2>
+        <div class="row">
+            <input type="text" name="login" placeholder="login">
+            <input type="password" name="password" placeholder="password">
+        </div>
+        <div class="row">
+            <button class="btn" type="submit">Войти</button>
+        </div>
+    </form>
 
 <?php endif; ?>
 

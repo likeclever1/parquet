@@ -23,6 +23,15 @@ body{
     margin-top: -70px;
 }
 
+.auth input{
+    width: 165px;
+    float: right;
+}
+
+.auth input:first-child{
+    float: left;
+}
+
 
 
 th, td{
