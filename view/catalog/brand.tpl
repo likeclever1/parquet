@@ -18,10 +18,13 @@
     $collectionQuery = mysqli_query($connect, "select * from `collection` where `id_brand` = '".$brandData['id']."'");
 
     while($row = mysqli_fetch_assoc($collectionQuery)) {
+        if(isset($row['feature'])) {
+            $row['feature'] = explode(", ", $row['feature']);
+        }
         $row['total'] = mysqli_fetch_assoc(mysqli_query($connect, "select count(`id_collection`) as total from `shipment` where `id_collection`='".$row['id']."'"))['total'];
         array_push($collectionData, $row);
     }
-
+    
     $prevRecord = mysqli_fetch_assoc(mysqli_query($connect, "select * from `brand` where (`id` < '".$brandId."' AND `id_category` = '".$brandIdcategory."') ORDER BY id DESC LIMIT 1"));
     $nextRecord = mysqli_fetch_assoc(mysqli_query($connect, "select * from `brand` where (`id` > '".$brandId."' AND `id_category` = '".$brandIdcategory."') ORDER BY id ASC LIMIT 1"));
 ?>
@@ -44,9 +47,15 @@
             <a href='/catalog/<?=$categoryUrl;?>/<?=$brandUrl;?>/<?=$collectionData[$i]['url'];?>' class='collection-list__link'>
                 <span class='collection-list__img'>
                     <img src='/upload/images/collection/<?=$collectionData[$i]['image'];?>' alt='<?=$collectionData[$i]['title'];?>'>
+                    <?php if(count ($collectionData[$i]['feature']) > 0) : ?>
+                        <ul class="hint">
+                            <?php for($j = 0, $jlen = count($collectionData[$i]['feature']); $j < $jlen; $j++): ?>
+                                <li><?=$collectionData[$i]['feature'][$j];?></li>
+                            <?php endfor; ?>
+                        </ul>
+                    <?php endif; ?>
                 </span>
                 <span class='collection-list__title'><?=$brandTitle;?> <?=$collectionData[$i]['title'];?></span>
-                <span class='hint'><?=$collectionData[$i]['feature'];?></span>
                 <span class='counter'> <?=$collectionData[$i]['total'];?> </span>
             </a>
         </li>

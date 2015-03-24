@@ -33,6 +33,18 @@
         });
     }
 
+    $(".collection-list__img img").on("mousemove", function(e) {
+        var $target = $(e.target);
+
+        var left = e.offsetX + 20,
+            top = e.offsetY - 30;
+
+        $(this).siblings(".hint").css({
+            "left": left + "px",
+            "top": top + "px"
+        });
+    });
+
     /*
     ** equalHeight
     */
@@ -70,6 +82,7 @@
         }
     });
 
+    $(".fancybox").fancybox();
     /*
      ** bxslider
      */

@@ -18,7 +18,7 @@
             <li class="social-list__item vk"><a href="#"></a></li>
         </ul>
         
-        <div class="copyright">2010-2015 &copy; <a href="/">parquet.od.ua</a>, Все права защищены.</div>
+        <div class="copyright">2010-2015 &copy; <a href="mailto:parket-antique@mail.ru">parket-antique@mail.ru</a>, Все права защищены.</div>
         
         <div class="f-logo">
             <a href="/">

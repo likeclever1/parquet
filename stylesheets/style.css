@@ -1012,6 +1012,7 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
 .collection {
   padding: 0 30px 0 15px; }
   .collection__content li {
+    margin-bottom: 5px;
     padding-left: 16px; }
     .collection__content li:before {
       content: "-";
@@ -1040,14 +1041,15 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
       border-color: #919191; }
     .collection-list__link:hover .collection-list__title {
       text-decoration: underline; }
-    .collection-list__link:hover .hint {
-      display: block; }
   .collection-list__img {
     border-radius: 5px;
     border: 1px solid #c4c4c4;
     display: block;
     margin-bottom: 10px;
     overflow: hidden; }
+    .collection-list__img img:hover+.hint{
+      display: block;
+    }
 
 /*  ============================================================================
     shipment-list
@@ -1138,8 +1140,8 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
   .tabs__nav-item:before {
     display: none; }
   .tabs__nav-item.current .tabs__nav-link {
-    background-color: #1272b5;
-    border-color: #1272b5; }
+    background-color: #4C728B;
+    border-color: #4C728B; }
     .tabs__nav-item.current .tabs__nav-link:after {
       background-position: -73px -207px; }
 .tabs__nav-link {
@@ -1168,8 +1170,8 @@ article ul li:before, .hint:before, .departments__item:before, .departments__ite
     bottom: -1px;
     z-index: 2; }
   .tabs__nav-link:hover {
-    background-color: #1272b5;
-    border-color: #1272b5; }
+    background-color: #4C728B;
+    border-color: #4C728B; }
     .tabs__nav-link:hover:after {
       background-position: -73px -207px; }
 /*  ============================================================================
@@ -1696,3 +1698,77 @@ input[type="search"]::-webkit-search-decoration {
   h3 {
     page-break-after: avoid; } }
 
+
+
+/*
+  ** gallery
+ */
+
+.gallery__list{
+  vertical-align: top;
+  list-style-type: none;
+  text-align: center;
+}
+.gallery__item{
+  display: inline-block;
+  vertical-align: top;
+  overflow: hidden;
+  padding: 0;
+  margin-left: 20px;
+}
+
+.gallery__item:before{
+  display: none;
+}
+
+.gallery__item:hover .hover {
+    -moz-transform: translate(0,0);
+    -ms-transform: translate(0,0);
+    -webkit-transform: translate(0,0);
+    transform: translate(0,0);
+    -moz-transition: cubic-bezier(.645,.045,.355,1) 500ms;
+    -o-transition: cubic-bezier(.645,.045,.355,1) 500ms;
+    -webkit-transition: cubic-bezier(.645,.045,.355,1) 500ms;
+    transition: cubic-bezier(.645,.045,.355,1) 500ms
+}
+
+.hover {
+    -moz-transform: translate(-100%,0);
+    -ms-transform: translate(-100%,0);
+    -webkit-transform: translate(-100%,0);
+    transform: translate(-100%,0);
+    -moz-transition: cubic-bezier(.645,.045,.355,1) 500ms;
+    -o-transition: cubic-bezier(.645,.045,.355,1) 500ms;
+    -webkit-transition: cubic-bezier(.645,.045,.355,1) 500ms;
+    transition: cubic-bezier(.645,.045,.355,1) 500ms;
+    border: 3px solid #304A5A;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    padding: 35px 28px;
+    position: absolute;
+    z-index: 2
+}
+
+.hover p {
+    text-transform: uppercase;
+    font-size: 14px;
+    line-height: 22px;
+    position: relative;
+    color: #000;
+    font-weight: bold;
+    text-align: left;
+}
+
+.hover p:after {
+    content: "";
+    display: block;
+    width: 64px;
+    height: 3px;
+    background: #304A5A;
+    position: absolute;
+    bottom: -35px;
+    left: 0
+}

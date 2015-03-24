@@ -1,39 +1,100 @@
-<article class="article">
-    <h1>Заголовок H1</h1>
-    <h2>Заголовок H2</h2>
-
-    <p>Разумные цены, широчайший ассортимент, дополнительные услуги, акции и скидки, удобная оплата, полезная информация о покрытиях, видео-уроки по укладке и уходу, удобный интерфейс поиска и выбора товара - делают покупку в нашем магазине напольных покрытий в Москве удобной и приятной.</p>
-    
-    <h1>Форма</h1>
-    <form class="form-control" action="/" method="POST">
-        <div class="form-control__row">
-            <div class="form-control__cell"><input type="text" name="" id=""></div>
-            <div class="form-control__cell"><input type="text" name="" id=""></div>
-        </div>
-        <div class="row">
-            <textarea name="" id="" cols="30" rows="10"></textarea>
-        </div>
-        <div class="row">
-            <div class="u-width100">
-                <button class="btn">Кнопка</button>
+<div class="gallery">
+    <ul class="gallery__list" id="skrollable">
+        <li class="gallery__item">
+            <a class="fancybox" href="images/gallery/full/01.jpg" rel="gallery">
+                <img src="images/gallery/01.jpg" alt="">
+                <div class="hover">
+                    <p>Паркет<br></p>
+                </div>
+            </a>
+        </li>
+        <li class="gallery__item">
+            <a class="fancybox" href="images/gallery/full/02.jpg" rel="gallery">
+                <img src="images/gallery/02.jpg" alt="">
+                <div class="hover">
+                    <p>Ламинат<br></p>
+                </div>
+            </a>
+        </li>
+        <li class="gallery__item">
+            <a class="fancybox" href="images/gallery/full/03.jpg" rel="gallery">
+                <img src="images/gallery/03.jpg" alt="">
+            </a>
+            <div class="hover">
+                <p>Штучный паркет<br></p>
             </div>
-        </div>
-    </form>
-
-    <p><b>Текст с картинкой</b></p>
-    <p>
-        <img class="fl-right" src="images/content/02.jpg" align="right" alt="">
-        Разумные цены, широчайший ассортимент, дополнительные услуги, акции и скидки, удобная оплата, полезная информация о покрытиях, видео-уроки по укладке и уходу, удобный интерфейс поиска и выбора товара - делают покупку в нашем магазине напольных покрытий в Москве удобной и приятной.
-        <br>
-        Разумные цены, широчайший ассортимент, дополнительные услуги, акции и скидки, удобная оплата, полезная информация о покрытиях, видео-уроки по укладке и уходу, удобный интерфейс поиска и выбора товара - делают покупку в нашем магазине напольных покрытий в Москве удобной и приятной.
-        <br>
-        Разумные цены, широчайший ассортимент, дополнительные услуги, акции и скидки, удобная оплата, полезная информация о покрытиях, видео-уроки по укладке и уходу, удобный интерфейс поиска и выбора товара - делают покупку в нашем магазине напольных покрытий в Москве удобной и приятной.
-        <br>
-        Разумные цены, широчайший ассортимент, дополнительные услуги, акции и скидки, удобная оплата, полезная информация о покрытиях, видео-уроки по укладке и уходу, удобный интерфейс поиска и выбора товара - делают покупку в нашем магазине напольных покрытий в Москве удобной и приятной.
-    </p>
-
-    <p>Разумные цены, широчайший ассортимент, дополнительные услуги, акции и скидки, удобная оплата, полезная информация о покрытиях, видео-уроки по укладке и уходу, удобный интерфейс поиска и выбора товара - делают покупку в нашем магазине напольных покрытий в Москве удобной и приятной.</p>
-
-    <p>Разумные цены, широчайший ассортимент, дополнительные услуги, акции и скидки, удобная оплата, полезная информация о покрытиях, видео-уроки по укладке и уходу, удобный интерфейс поиска и выбора товара - делают покупку в нашем магазине напольных покрытий в Москве удобной и приятной.</p>
-</article>
-
+        </li>
+        <li class="gallery__item">
+            <a class="fancybox" href="images/gallery/full/01.jpg" rel="gallery">
+                <img src="images/gallery/04.jpg" alt="">
+            </a>
+            <div class="hover">
+                <p>Итальянская паркетная доска<br></p>
+            </div>
+        </li>
+        <li class="gallery__item">
+            <a class="fancybox" href="images/gallery/full/02.jpg" rel="gallery">
+                <img src="images/gallery/05.jpg" alt="">
+            </a>
+            <div class="hover">
+                <p>Паркетная доска<br></p>
+            </div>
+        </li>
+        <li class="gallery__item">
+            <a class="fancybox" href="images/gallery/full/03.jpg" rel="gallery">
+                <img src="images/gallery/06.jpg" alt="">
+            </a>
+            <div class="hover">
+                <p>Паркетная Химия<br></p>
+            </div>
+        </li>
+        <li class="gallery__item">
+            <a class="fancybox" href="images/gallery/full/01.jpg" rel="gallery">
+                <img src="images/gallery/01.jpg" alt="">
+                <div class="hover">
+                    <p>Паркет<br></p>
+                </div>
+            </a>
+        </li>
+        <li class="gallery__item">
+            <a class="fancybox" href="images/gallery/full/02.jpg" rel="gallery">
+                <img src="images/gallery/02.jpg" alt="">
+                <div class="hover">
+                    <p>Ламинат<br></p>
+                </div>
+            </a>
+        </li>
+        <li class="gallery__item">
+            <a class="fancybox" href="images/gallery/full/03.jpg" rel="gallery">
+                <img src="images/gallery/03.jpg" alt="">
+            </a>
+            <div class="hover">
+                <p>Штучный паркет<br></p>
+            </div>
+        </li>
+        <li class="gallery__item">
+            <a class="fancybox" href="images/gallery/full/01.jpg" rel="gallery">
+                <img src="images/gallery/04.jpg" alt="">
+            </a>
+            <div class="hover">
+                <p>Итальянская паркетная доска<br></p>
+            </div>
+        </li>
+        <li class="gallery__item">
+            <a class="fancybox" href="images/gallery/full/02.jpg" rel="gallery">
+                <img src="images/gallery/05.jpg" alt="">
+            </a>
+            <div class="hover">
+                <p>Паркетная доска<br></p>
+            </div>
+        </li>
+        <li class="gallery__item">
+            <a class="fancybox" href="images/gallery/full/03.jpg" rel="gallery">
+                <img src="images/gallery/06.jpg" alt="">
+            </a>
+            <div class="hover">
+                <p>Паркетная Химия<br></p>
+            </div>
+        </li>
+    </ul>
+</div><!-- end .gallery -->

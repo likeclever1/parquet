@@ -211,11 +211,11 @@ $("#brandForm").on("click", function(e) {
 // **************************** start Collection ***************************************//
 
 $("#collectionForm").on("click", function(e) {
-
     var $target = $(e.target),
         type = null,
         dataRequest = {},
         formData,
+        featureData = null,
         textOutput = $("#collectionOutput");
 
     if($target.hasClass("btn-remove")) {
@@ -233,6 +233,18 @@ $("#collectionForm").on("click", function(e) {
         formData = new FormData();
         formData.append('file', $("#collectionImage").get(0).files[0]);
         formData.append('folder', 'collection');
+
+        featureData = "";
+
+        $("#featureTable td").each(function(item) {
+            debugger;
+            if(item == $("#featureTable td").length - 1) {
+                featureData += this.innerHTML;
+            } else {
+                featureData += this.innerHTML + ", ";
+            }
+        });
+
 
         $.ajax({
             processData: false,
@@ -252,7 +264,7 @@ $("#collectionForm").on("click", function(e) {
         "url": $('#inputCollection').find(".url input").val() || $target.parents("tr").find(".url textarea").val(),
         "image": $("#collectionImage").val().split("\\").pop() || $target.parents("tr").find(".image textarea").val(),
         "id_brand": $('#inputCollection').find(".id_brand input").val() || $target.parents("tr").find(".id_brand textarea").val(),
-        "feature": $('#inputCollection').find(".feature textarea").val() || $target.parents("tr").find(".feature textarea").val(),
+        "feature": featureData || $target.parents("tr").find(".feature textarea").val(),
         "text": $('#inputCollection').find(".text textarea").val() || $target.parents("tr").find(".text textarea").val()
     };
 
@@ -285,6 +297,7 @@ $("#collectionForm").on("click", function(e) {
 
                     $("#inputCollection").find("input").val("");
                     $("#inputCollection").find("textarea").val("");
+                    $("#featureTable").remove();
 
                     $("<tr>\n" + 
                         "<td class='id'>" + data['id'] + "</td>\n" + 
@@ -294,8 +307,8 @@ $("#collectionForm").on("click", function(e) {
                         "<td class='id_brand'><textarea cols=\"12\" rows=\"1\">" + data['id_brand'] + "</textarea></td>\n" + 
                         "<td class='feature'><textarea cols=\"17\" rows=\"1\">" + data['feature'] + "</textarea></td>\n" + 
                         "<td class='text'><textarea cols=\"17\" rows=\"1\">" + data['text'] + "</textarea></td>\n" + 
-                        "<td><button class=\"btn btn-update\" name='update_type' data-id='" + data['id'] + "'>Update</button></td>\n" + 
-                        "<td><button class=\"btn btn-remove\" name='remove_type' data-id='" + data['id'] + "'>Remove</button></td>\n" + 
+                        "<td><span class=\"btn btn-update\" name='update_type' data-id='" + data['id'] + "'>Update</span></td>\n" + 
+                        "<td><span class=\"btn btn-remove\" name='remove_type' data-id='" + data['id'] + "'>Remove</span></td>\n" + 
                     "</tr>").appendTo(".table-collection");
 
                     textOutput.get(0).innerHTML = "Коллекция " + data['title'] + " добавлен";
