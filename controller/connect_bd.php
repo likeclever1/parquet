@@ -1,9 +1,5 @@
 <?php
-    
-    $db_host = 'localhost';
-    $db_name = 'parquet';
-    $db_user = 'root';
-    $db_password = '';
+    include("config.php");
 
     $connect = mysqli_connect($db_host, $db_user, $db_password);
 
